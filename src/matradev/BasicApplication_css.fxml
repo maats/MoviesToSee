@@ -248,12 +248,22 @@
                         <Button fx:id="btnDelete" layoutX="10.0" layoutY="176.0" mnemonicParsing="false" text="Usuń" />
                      </children>
                   </VBox>
-                  <TableView prefHeight="106.0" prefWidth="155.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
-                    <columns>
-                      <TableColumn prefWidth="75.0" text="C1" />
-                      <TableColumn prefWidth="75.0" text="C2" />
-                    </columns>
-                  </TableView>
+                  <VBox GridPane.columnSpan="4" GridPane.rowIndex="1">
+                     <children>
+                        <TableView fx:id="tbvMovieListFromDb">
+                          <columns>
+                            <TableColumn fx:id="tbcMovieTitle" maxWidth="-Infinity" minWidth="200.0" prefWidth="200.0" resizable="false" text="Tytuł filmu" />
+                            <TableColumn fx:id="tbcImdbRating" maxWidth="-Infinity" minWidth="45.0" prefWidth="45.0" resizable="false" text="Ocena" />
+                              <TableColumn fx:id="tbcPremiereDate" maxWidth="-Infinity" minWidth="90.0" prefWidth="90.0" resizable="false" text="Data premiery" />
+                              <TableColumn fx:id="tbcLength" maxWidth="-Infinity" minWidth="75.0" prefWidth="75.0" resizable="false" text="Czas trwania" />
+                              <TableColumn fx:id="tbcGenre" maxWidth="-Infinity" minWidth="250.0" prefWidth="250.0" resizable="false" text="Gatunek" />
+                          </columns>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </TableView>
+                     </children>
+                  </VBox>
                </children>
             </GridPane>
          </children>

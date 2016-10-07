@@ -1,5 +1,7 @@
 package matradev;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -7,16 +9,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.ImageViewBuilder;
 import javafx.stage.Stage;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -36,10 +34,17 @@ public class Controller implements Initializable{
     @FXML private Label lblVotesCount;
     @FXML private Label lblDescription;
     @FXML private ImageView imvPoster;
+    @FXML private TableView<MovieToSee> tbvMovieListFromDb;
+    @FXML private TableColumn<MovieToSee, String> tbcGenre;
+    @FXML private TableColumn<MovieToSee, String> tbcImdbRating;
+    @FXML private TableColumn<MovieToSee, String> tbcLength;
+    @FXML private TableColumn<MovieToSee, String> tbcMovieTitle;
+    @FXML private TableColumn<MovieToSee, String> tbcPremiereDate;
     private String movieIdForParser;
     private Image poster;
     ImdbJsonReader imdbJsonReader = new ImdbJsonReader();
     private static Map<String, Object> userData = null;
+    private ObservableList<MovieToSee> moviesToSee = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -84,6 +89,17 @@ public class Controller implements Initializable{
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        btnModify.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DatabaseHandling.connectWithDatabase();
+                MovieToSee movieToSee = DatabaseHandling.getElementFromDatabase();
+                moviesToSee.add(movieToSee);
+                //tbcMovieTitle.setCellValueFactory(cellData -> cellData.getValue().getImdbMovie().getTitle());
+                tbcMovieTitle.setCellValueFactory(new PropertyValueFactory<MovieToSee, String>("title"));
             }
         });
 

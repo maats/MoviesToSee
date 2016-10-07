@@ -1,9 +1,6 @@
 package matradev;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  * Created by Mateusz on 03.10.2016.
@@ -76,6 +73,37 @@ public class DatabaseHandling {
         }
 
         return true;
+    }
+
+    public static MovieToSee getElementFromDatabase()
+    {
+        MovieToSee movieToSee = null;
+
+        try {
+            statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM moviestosee");
+            while(rs.next())
+            {
+                String title = rs.getString("movie_title");
+                float imdbRating = rs.getFloat("imdb_rating");
+                int votesCount = rs.getInt("votes_count");
+                int metascore = rs.getInt("metascore");
+                String premiereDate = rs.getString("premiere_date");
+                int length = rs.getInt("length");
+                String genre = rs.getString("genre");
+                String description = rs.getString("description");
+                String posterURL = rs.getString("poster_url");
+                String imdbID = rs.getString("imdb_id");
+                ImdbMovie imdbMovie = new ImdbMovie(title, imdbRating, votesCount, metascore, premiereDate, length, genre, description, posterURL, imdbID);
+                movieToSee = new MovieToSee(imdbMovie);
+
+                System.out.println(title + " " + imdbRating + " " + votesCount + " " + metascore);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+
+        return movieToSee;
     }
 
 /*    public static boolean insertElementIntoDatabase(String[] args)

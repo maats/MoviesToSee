@@ -31,6 +31,18 @@ public class TableEntry {
         this.imdbID = imdbID;
     }
 
+    @Override
+    public String toString() {
+        return "TableEntry{" +
+                "title=" + title +
+                ", imdbRating=" + imdbRating +
+                ", premiereDate=" + premiereDate +
+                ", length=" + length +
+                ", genre=" + genre +
+                ", imdbID='" + imdbID + '\'' +
+                '}';
+    }
+
     public String getTitle() {
         return title.get();
     }

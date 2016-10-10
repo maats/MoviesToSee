@@ -1,12 +1,11 @@
 package matradev;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
 /**
  * Created by Mateusz on 05.10.2016.
+ * TODO: Make static maps with values instead of adding it by constructor
  */
 public class MovieToSee {
 

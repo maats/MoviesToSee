@@ -2,14 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Added inserting data in TableView from database&#10;Documented some part of code&#10;Made some code cleanup">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/matradev/TableEntry.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/matradev/sample.fxml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/matradev/AddDialogController.java" afterPath="$PROJECT_DIR$/src/matradev/AddDialogController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/matradev/BasicApplication_css.fxml" afterPath="$PROJECT_DIR$/src/matradev/BasicApplication_css.fxml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/matradev/Controller.java" afterPath="$PROJECT_DIR$/src/matradev/Controller.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/matradev/DatabaseHandling.java" afterPath="$PROJECT_DIR$/src/matradev/DatabaseHandling.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/matradev/ImdbJsonReader.java" afterPath="$PROJECT_DIR$/src/matradev/ImdbJsonReader.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/matradev/ImdbMovie.java" afterPath="$PROJECT_DIR$/src/matradev/ImdbMovie.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/matradev/Main.java" afterPath="$PROJECT_DIR$/src/matradev/Main.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/matradev/MovieToSee.java" afterPath="$PROJECT_DIR$/src/matradev/MovieToSee.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/matradev/TableEntry.java" afterPath="$PROJECT_DIR$/src/matradev/TableEntry.java" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -68,11 +69,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/matradev/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="428">
-              <caret line="32" column="87" selection-start-line="32" selection-start-column="87" selection-end-line="32" selection-end-column="87" />
+            <state relative-caret-position="374">
+              <caret line="24" column="38" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -83,13 +84,37 @@
       <file leaf-file-name="Controller.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/matradev/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="461">
-              <caret line="123" column="26" selection-start-line="123" selection-start-column="26" selection-end-line="123" selection-end-column="26" />
+            <state relative-caret-position="2839">
+              <caret line="167" column="0" selection-start-line="167" selection-start-column="0" selection-end-line="167" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1879#1880#0" expanded="true" />
-                <element signature="e#1927#1928#0" expanded="true" />
+                <element signature="e#2222#2242#0" expanded="true" />
+                <element signature="e#2316#2317#0" expanded="true" />
+                <element signature="e#2364#2365#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BasicApplication_css.fxml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/matradev/BasicApplication_css.fxml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="585">
+              <caret line="273" column="17" selection-start-line="273" selection-start-column="17" selection-end-line="273" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="JavaFX-Scene-Builder">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Movie2.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/matradev/Movie2.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -97,12 +122,12 @@
       <file leaf-file-name="AddDialogController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/matradev/AddDialogController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="50" column="50" selection-start-line="50" selection-start-column="50" selection-end-line="50" selection-end-column="50" />
+            <state relative-caret-position="867">
+              <caret line="102" column="59" selection-start-line="102" selection-start-column="59" selection-end-line="102" selection-end-column="59" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#getMovieParametersFromChoiceBoxes#0;class#AddDialogController#0" expanded="false" />
-                <element signature="method#loadMovieParametersToChoiceBoxes#0;class#AddDialogController#0" expanded="false" />
+                <marker date="1476124556886" expanded="false" signature="8031:9327" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -111,9 +136,21 @@
       <file leaf-file-name="ImdbJsonReader.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/matradev/ImdbJsonReader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="736">
-              <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+            <state relative-caret-position="204">
+              <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MovieToSee.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/matradev/MovieToSee.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-391">
+              <caret line="7" column="73" selection-start-line="7" selection-start-column="73" selection-end-line="7" selection-end-column="73" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -121,8 +158,8 @@
       <file leaf-file-name="ImdbMovie.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/matradev/ImdbMovie.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="9" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="9" />
+            <state relative-caret-position="2">
+              <caret line="18" column="16" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
               <folding>
                 <element signature="e#1537#1538#0" expanded="true" />
                 <element signature="e#1566#1567#0" expanded="true" />
@@ -131,23 +168,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MovieToSee.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/matradev/MovieToSee.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-663">
-              <caret line="18" column="45" selection-start-line="18" selection-start-column="45" selection-end-line="18" selection-end-column="45" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DatabaseHandling.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DatabaseHandling.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/matradev/DatabaseHandling.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="23" column="39" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
+            <state relative-caret-position="612">
+              <caret line="36" column="45" selection-start-line="36" selection-start-column="45" selection-end-line="36" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -156,41 +181,41 @@
       <file leaf-file-name="TableEntry.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/matradev/TableEntry.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="27" column="67" selection-start-line="27" selection-start-column="67" selection-end-line="27" selection-end-column="67" />
+            <state relative-caret-position="612">
+              <caret line="39" column="38" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
               <folding>
-                <element signature="e#1310#1311#0" expanded="true" />
-                <element signature="e#1344#1345#0" expanded="true" />
-                <element signature="e#1389#1390#0" expanded="true" />
-                <element signature="e#1417#1418#0" expanded="true" />
-                <element signature="e#1453#1454#0" expanded="true" />
-                <element signature="e#1492#1493#0" expanded="true" />
-                <element signature="e#1541#1542#0" expanded="true" />
-                <element signature="e#1574#1575#0" expanded="true" />
-                <element signature="e#1613#1614#0" expanded="true" />
-                <element signature="e#1654#1655#0" expanded="true" />
-                <element signature="e#1706#1707#0" expanded="true" />
-                <element signature="e#1741#1742#0" expanded="true" />
-                <element signature="e#1771#1772#0" expanded="true" />
-                <element signature="e#1806#1807#0" expanded="true" />
-                <element signature="e#1853#1854#0" expanded="true" />
-                <element signature="e#1882#1883#0" expanded="true" />
-                <element signature="e#1914#1915#0" expanded="true" />
-                <element signature="e#1948#1949#0" expanded="true" />
-                <element signature="e#1993#1994#0" expanded="true" />
-                <element signature="e#2021#2022#0" expanded="true" />
-                <element signature="e#2054#2055#0" expanded="true" />
-                <element signature="e#2083#2084#0" expanded="true" />
-                <element signature="e#2125#2126#0" expanded="true" />
-                <element signature="e#2162#2163#0" expanded="true" />
+                <element signature="e#1670#1671#0" expanded="true" />
+                <element signature="e#1704#1705#0" expanded="true" />
+                <element signature="e#1749#1750#0" expanded="true" />
+                <element signature="e#1777#1778#0" expanded="true" />
+                <element signature="e#1813#1814#0" expanded="true" />
+                <element signature="e#1852#1853#0" expanded="true" />
+                <element signature="e#1901#1902#0" expanded="true" />
+                <element signature="e#1934#1935#0" expanded="true" />
+                <element signature="e#1973#1974#0" expanded="true" />
+                <element signature="e#2014#2015#0" expanded="true" />
+                <element signature="e#2066#2067#0" expanded="true" />
+                <element signature="e#2101#2102#0" expanded="true" />
+                <element signature="e#2131#2132#0" expanded="true" />
+                <element signature="e#2166#2167#0" expanded="true" />
                 <element signature="e#2213#2214#0" expanded="true" />
-                <element signature="e#2260#2261#0" expanded="true" />
-                <element signature="e#2316#2317#0" expanded="true" />
-                <element signature="e#2367#2368#0" expanded="true" />
-                <element signature="e#2408#2409#0" expanded="true" />
-                <element signature="e#2447#2448#0" expanded="true" />
-                <element signature="e#2489#2490#0" expanded="true" />
-                <element signature="e#2526#2527#0" expanded="true" />
+                <element signature="e#2242#2243#0" expanded="true" />
+                <element signature="e#2274#2275#0" expanded="true" />
+                <element signature="e#2308#2309#0" expanded="true" />
+                <element signature="e#2353#2354#0" expanded="true" />
+                <element signature="e#2381#2382#0" expanded="true" />
+                <element signature="e#2414#2415#0" expanded="true" />
+                <element signature="e#2443#2444#0" expanded="true" />
+                <element signature="e#2485#2486#0" expanded="true" />
+                <element signature="e#2522#2523#0" expanded="true" />
+                <element signature="e#2573#2574#0" expanded="true" />
+                <element signature="e#2620#2621#0" expanded="true" />
+                <element signature="e#2676#2677#0" expanded="true" />
+                <element signature="e#2727#2728#0" expanded="true" />
+                <element signature="e#2768#2769#0" expanded="true" />
+                <element signature="e#2807#2808#0" expanded="true" />
+                <element signature="e#2849#2850#0" expanded="true" />
+                <element signature="e#2886#2887#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -223,14 +248,15 @@
       <list>
         <option value="$PROJECT_DIR$/src/matradev/sample.fxml" />
         <option value="$PROJECT_DIR$/src/matradev/JsonReader.java" />
-        <option value="$PROJECT_DIR$/src/matradev/BasicApplication_css.fxml" />
         <option value="$PROJECT_DIR$/src/matradev/AddDialog.fxml" />
-        <option value="$PROJECT_DIR$/src/matradev/Main.java" />
         <option value="$PROJECT_DIR$/src/matradev/ImdbMovie.java" />
+        <option value="$PROJECT_DIR$/src/matradev/Movie2.java" />
+        <option value="$PROJECT_DIR$/src/matradev/TableEntry.java" />
+        <option value="$PROJECT_DIR$/src/matradev/BasicApplication_css.fxml" />
+        <option value="$PROJECT_DIR$/src/matradev/AddDialogController.java" />
         <option value="$PROJECT_DIR$/src/matradev/MovieToSee.java" />
         <option value="$PROJECT_DIR$/src/matradev/ImdbJsonReader.java" />
-        <option value="$PROJECT_DIR$/src/matradev/AddDialogController.java" />
-        <option value="$PROJECT_DIR$/src/matradev/TableEntry.java" />
+        <option value="$PROJECT_DIR$/src/matradev/Main.java" />
         <option value="$PROJECT_DIR$/src/matradev/Controller.java" />
         <option value="$PROJECT_DIR$/src/matradev/DatabaseHandling.java" />
       </list>
@@ -361,15 +387,15 @@
     <property name="SearchEverywhereHistoryKey" value="Map&#9;PSI&#9;JAVA://matradev.AddDialogController#mapAudioSubtitles" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Mateusz\IdeaProjects\Strefa2\JavaFX_1\src\matradev" />
-      <recent name="C:\Users\Mateusz\IdeaProjects\Strefa2\JavaFX_1\resources\images" />
-      <recent name="C:\Users\Mateusz\IdeaProjects\Strefa2\JavaFX_1\resources" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Mateusz\IdeaProjects\Strefa2\JavaFX_1\src\matradev" />
       <recent name="C:\Users\Mateusz\IdeaProjects\Strefa2\JavaFX_1\src" />
       <recent name="C:\Users\Mateusz\IdeaProjects\Strefa2\JavaFX_1\resources\images" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Mateusz\IdeaProjects\Strefa2\JavaFX_1\src\matradev" />
+      <recent name="C:\Users\Mateusz\IdeaProjects\Strefa2\JavaFX_1\resources\images" />
+      <recent name="C:\Users\Mateusz\IdeaProjects\Strefa2\JavaFX_1\resources" />
     </key>
   </component>
   <component name="RunManager" selected="Application.Main">
@@ -747,7 +773,14 @@
       <option name="project" value="LOCAL" />
       <updated>1475847143681</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added inserting data in TableView from database&#10;Documented some part of code&#10;Made some code cleanup">
+      <created>1476092467277</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1476092467277</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -775,7 +808,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24025974" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17537314" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
@@ -825,14 +858,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/matradev/ImdbJsonReader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/matradev/BasicApplication_css.fxml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -889,8 +914,9 @@
           <caret line="40" column="57" selection-start-line="40" selection-start-column="57" selection-end-line="40" selection-end-column="57" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1879#1880#0" expanded="true" />
-            <element signature="e#1927#1928#0" expanded="true" />
+            <element signature="e#2222#2242#0" expanded="true" />
+            <element signature="e#2316#2317#0" expanded="true" />
+            <element signature="e#2364#2365#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -913,7 +939,7 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#getMovieParametersFromChoiceBoxes#0;class#AddDialogController#0" expanded="false" />
-            <element signature="method#loadMovieParametersToChoiceBoxes#0;class#AddDialogController#0" expanded="false" />
+            <marker date="1476124556886" expanded="false" signature="8031:9327" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -972,8 +998,9 @@
           <caret line="67" column="16" selection-start-line="67" selection-start-column="16" selection-end-line="67" selection-end-column="68" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1879#1880#0" expanded="true" />
-            <element signature="e#1927#1928#0" expanded="true" />
+            <element signature="e#2222#2242#0" expanded="true" />
+            <element signature="e#2316#2317#0" expanded="true" />
+            <element signature="e#2364#2365#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -985,7 +1012,7 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#getMovieParametersFromChoiceBoxes#0;class#AddDialogController#0" expanded="false" />
-            <element signature="method#loadMovieParametersToChoiceBoxes#0;class#AddDialogController#0" expanded="false" />
+            <marker date="1476124556886" expanded="false" signature="8031:9327" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -1066,8 +1093,9 @@
           <caret line="41" column="72" selection-start-line="41" selection-start-column="72" selection-end-line="41" selection-end-column="72" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1879#1880#0" expanded="true" />
-            <element signature="e#1927#1928#0" expanded="true" />
+            <element signature="e#2222#2242#0" expanded="true" />
+            <element signature="e#2316#2317#0" expanded="true" />
+            <element signature="e#2364#2365#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1131,8 +1159,9 @@
           <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1879#1880#0" expanded="true" />
-            <element signature="e#1927#1928#0" expanded="true" />
+            <element signature="e#2222#2242#0" expanded="true" />
+            <element signature="e#2316#2317#0" expanded="true" />
+            <element signature="e#2364#2365#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1164,8 +1193,9 @@
           <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1879#1880#0" expanded="true" />
-            <element signature="e#1927#1928#0" expanded="true" />
+            <element signature="e#2222#2242#0" expanded="true" />
+            <element signature="e#2316#2317#0" expanded="true" />
+            <element signature="e#2364#2365#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1197,8 +1227,9 @@
           <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1879#1880#0" expanded="true" />
-            <element signature="e#1927#1928#0" expanded="true" />
+            <element signature="e#2222#2242#0" expanded="true" />
+            <element signature="e#2316#2317#0" expanded="true" />
+            <element signature="e#2364#2365#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1230,33 +1261,12 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/matradev/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="428">
-          <caret line="32" column="87" selection-start-line="32" selection-start-column="87" selection-end-line="32" selection-end-column="87" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/matradev/BasicApplication.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/matradev/BasicApplication_css.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
-          <caret line="272" column="16" selection-start-line="272" selection-start-column="16" selection-end-line="272" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/matradev/sample.fxml">
@@ -1272,81 +1282,65 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/matradev/ImdbJsonReader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="736">
-          <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+        <state relative-caret-position="204">
+          <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/matradev/AddDialogController.java">
+    <entry file="file://$PROJECT_DIR$/src/matradev/DatabaseHandling.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="50" column="50" selection-start-line="50" selection-start-column="50" selection-end-line="50" selection-end-column="50" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#getMovieParametersFromChoiceBoxes#0;class#AddDialogController#0" expanded="false" />
-            <element signature="method#loadMovieParametersToChoiceBoxes#0;class#AddDialogController#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="612">
+          <caret line="36" column="45" selection-start-line="36" selection-start-column="45" selection-end-line="36" selection-end-column="45" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/matradev/TableEntry.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="27" column="67" selection-start-line="27" selection-start-column="67" selection-end-line="27" selection-end-column="67" />
+        <state relative-caret-position="612">
+          <caret line="39" column="38" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
           <folding>
-            <element signature="e#1310#1311#0" expanded="true" />
-            <element signature="e#1344#1345#0" expanded="true" />
-            <element signature="e#1389#1390#0" expanded="true" />
-            <element signature="e#1417#1418#0" expanded="true" />
-            <element signature="e#1453#1454#0" expanded="true" />
-            <element signature="e#1492#1493#0" expanded="true" />
-            <element signature="e#1541#1542#0" expanded="true" />
-            <element signature="e#1574#1575#0" expanded="true" />
-            <element signature="e#1613#1614#0" expanded="true" />
-            <element signature="e#1654#1655#0" expanded="true" />
-            <element signature="e#1706#1707#0" expanded="true" />
-            <element signature="e#1741#1742#0" expanded="true" />
-            <element signature="e#1771#1772#0" expanded="true" />
-            <element signature="e#1806#1807#0" expanded="true" />
-            <element signature="e#1853#1854#0" expanded="true" />
-            <element signature="e#1882#1883#0" expanded="true" />
-            <element signature="e#1914#1915#0" expanded="true" />
-            <element signature="e#1948#1949#0" expanded="true" />
-            <element signature="e#1993#1994#0" expanded="true" />
-            <element signature="e#2021#2022#0" expanded="true" />
-            <element signature="e#2054#2055#0" expanded="true" />
-            <element signature="e#2083#2084#0" expanded="true" />
-            <element signature="e#2125#2126#0" expanded="true" />
-            <element signature="e#2162#2163#0" expanded="true" />
+            <element signature="e#1670#1671#0" expanded="true" />
+            <element signature="e#1704#1705#0" expanded="true" />
+            <element signature="e#1749#1750#0" expanded="true" />
+            <element signature="e#1777#1778#0" expanded="true" />
+            <element signature="e#1813#1814#0" expanded="true" />
+            <element signature="e#1852#1853#0" expanded="true" />
+            <element signature="e#1901#1902#0" expanded="true" />
+            <element signature="e#1934#1935#0" expanded="true" />
+            <element signature="e#1973#1974#0" expanded="true" />
+            <element signature="e#2014#2015#0" expanded="true" />
+            <element signature="e#2066#2067#0" expanded="true" />
+            <element signature="e#2101#2102#0" expanded="true" />
+            <element signature="e#2131#2132#0" expanded="true" />
+            <element signature="e#2166#2167#0" expanded="true" />
             <element signature="e#2213#2214#0" expanded="true" />
-            <element signature="e#2260#2261#0" expanded="true" />
-            <element signature="e#2316#2317#0" expanded="true" />
-            <element signature="e#2367#2368#0" expanded="true" />
-            <element signature="e#2408#2409#0" expanded="true" />
-            <element signature="e#2447#2448#0" expanded="true" />
-            <element signature="e#2489#2490#0" expanded="true" />
-            <element signature="e#2526#2527#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/matradev/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="461">
-          <caret line="123" column="26" selection-start-line="123" selection-start-column="26" selection-end-line="123" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1879#1880#0" expanded="true" />
-            <element signature="e#1927#1928#0" expanded="true" />
+            <element signature="e#2242#2243#0" expanded="true" />
+            <element signature="e#2274#2275#0" expanded="true" />
+            <element signature="e#2308#2309#0" expanded="true" />
+            <element signature="e#2353#2354#0" expanded="true" />
+            <element signature="e#2381#2382#0" expanded="true" />
+            <element signature="e#2414#2415#0" expanded="true" />
+            <element signature="e#2443#2444#0" expanded="true" />
+            <element signature="e#2485#2486#0" expanded="true" />
+            <element signature="e#2522#2523#0" expanded="true" />
+            <element signature="e#2573#2574#0" expanded="true" />
+            <element signature="e#2620#2621#0" expanded="true" />
+            <element signature="e#2676#2677#0" expanded="true" />
+            <element signature="e#2727#2728#0" expanded="true" />
+            <element signature="e#2768#2769#0" expanded="true" />
+            <element signature="e#2807#2808#0" expanded="true" />
+            <element signature="e#2849#2850#0" expanded="true" />
+            <element signature="e#2886#2887#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/matradev/ImdbMovie.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="9" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="9" />
+        <state relative-caret-position="2">
+          <caret line="18" column="16" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
           <folding>
             <element signature="e#1537#1538#0" expanded="true" />
             <element signature="e#1566#1567#0" expanded="true" />
@@ -1356,19 +1350,65 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/matradev/MovieToSee.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-663">
-          <caret line="18" column="45" selection-start-line="18" selection-start-column="45" selection-end-line="18" selection-end-column="45" />
+        <state relative-caret-position="-391">
+          <caret line="7" column="73" selection-start-line="7" selection-start-column="73" selection-end-line="7" selection-end-column="73" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/matradev/DatabaseHandling.java">
+    <entry file="file://$PROJECT_DIR$/src/matradev/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="39" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
+        <state relative-caret-position="2839">
+          <caret line="167" column="0" selection-start-line="167" selection-start-column="0" selection-end-line="167" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2222#2242#0" expanded="true" />
+            <element signature="e#2316#2317#0" expanded="true" />
+            <element signature="e#2364#2365#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/matradev/BasicApplication_css.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="273" column="17" selection-start-line="273" selection-start-column="17" selection-end-line="273" selection-end-column="17" />
           <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/matradev/Movie2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/matradev/AddDialogController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="867">
+          <caret line="102" column="59" selection-start-line="102" selection-start-column="59" selection-end-line="102" selection-end-column="59" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#getMovieParametersFromChoiceBoxes#0;class#AddDialogController#0" expanded="false" />
+            <marker date="1476124556886" expanded="false" signature="8031:9327" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/matradev/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="24" column="38" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="38" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

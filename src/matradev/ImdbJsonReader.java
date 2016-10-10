@@ -15,7 +15,6 @@ import java.util.Map;
  */
 public class ImdbJsonReader {
 
-    String parseUrl;
     private static ObjectMapper objectMapper = new ObjectMapper();
     private JsonNode node;
     private ImdbMovie movie;
@@ -33,7 +32,7 @@ public class ImdbJsonReader {
      */
     public JsonNode parseImdbId(String movieId)
     {
-        parseUrl = "http://www.omdbapi.com/?i=" + movieId + "&plot=short&r=json";
+        String parseUrl = "http://www.omdbapi.com/?i=" + movieId + "&plot=short&r=json";
         try {
             node = objectMapper.readValue(new URL(parseUrl), JsonNode.class);
         } catch (IOException e) {
@@ -51,7 +50,7 @@ public class ImdbJsonReader {
     public JsonNode parseImdbByMovieTitleAndYear(String movieTitle, String movieYear)
     {
         movieTitle = movieTitle.replaceAll(" ", "+");
-        parseUrl = "http://www.omdbapi.com/?t=" + movieTitle + "&y=" + movieYear + "&plot=short&r=json";
+        String parseUrl = "http://www.omdbapi.com/?t=" + movieTitle + "&y=" + movieYear + "&plot=short&r=json";
 
         try {
             node = objectMapper.readValue(new URL(parseUrl), JsonNode.class);

@@ -1,5 +1,8 @@
 package matradev;
 
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,7 +13,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -21,31 +23,44 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 
+/**
+ * Controller of Main Window
+ * Created by Mateusz on 03.10.2016.
+ * TODO: Caching images
+ * TODO: Improve UI
+ */
 public class Controller implements Initializable{
 
     @FXML private Button btnParse;
     @FXML private Button btnAdd;
     @FXML private Button btnModify;
     @FXML private Button btnDelete;
-    @FXML private TextField txtIdToParse;
-    @FXML private Label lblMovieTitle;
-    @FXML private Label lblImdbRating;
-    @FXML private Label lblVotesCount;
     @FXML private Label lblDescription;
+    @FXML private Label lblGenre;
+    @FXML private Label lblImdbRating;
+    @FXML private Label lblLength;
+    @FXML private Label lblMetascore;
+    @FXML private Label lblMovieTitle;
+    @FXML private Label lblPremiereDate;
+    @FXML private Label lblVotesCount;
+    @FXML private Label lblSource;
+    @FXML private Label lblVersion;
+    @FXML private Label lblContainer;
+    @FXML private Label lblResolution;
+    @FXML private Label lblAudioSubtitles;
     @FXML private ImageView imvPoster;
     @FXML private TableView<TableEntry> tbvMovieListFromDb;
     @FXML private TableColumn<TableEntry, String> tbcGenre;
-    @FXML private TableColumn<TableEntry, Float> tbcImdbRating;
-    @FXML private TableColumn<TableEntry, Integer> tbcLength;
+    @FXML private TableColumn<TableEntry, Number> tbcImdbRating;
+    @FXML private TableColumn<TableEntry, Number> tbcLength;
     @FXML private TableColumn<TableEntry, String> tbcMovieTitle;
     @FXML private TableColumn<TableEntry, String> tbcPremiereDate;
     private String movieIdForParser;
     private Image poster;
-    ImdbJsonReader imdbJsonReader = new ImdbJsonReader();
-    private static Map<String, Object> userData = null;
     static ObservableList<TableEntry> moviesToSeeAsTableEntries = FXCollections.observableArrayList();
-    static Map<Integer, MovieToSee> moviesToSee;
+    static Map<String, MovieToSee> moviesToSee = new TreeMap<String, MovieToSee>();
 
     public ObservableList<TableEntry> getMoviesToSeeAsTableEntries() {
         return moviesToSeeAsTableEntries;
@@ -54,7 +69,6 @@ public class Controller implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        btnParse.setText("Parse");
         try {
             FileInputStream input = new FileInputStream("resources/images/noposter.png");
             poster = new Image(input);
@@ -62,22 +76,6 @@ public class Controller implements Initializable{
             e.printStackTrace();
         }
         imvPoster.setImage(poster);
-        btnParse.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                movieIdForParser = txtIdToParse.getText();
-                System.out.println(movieIdForParser);
-                imdbJsonReader.parseImdbId(movieIdForParser);
-                imdbJsonReader.processParsedData();
-                System.out.println("Button test");
-                ImdbMovie movie = imdbJsonReader.getMovie();
-                lblMovieTitle.setText(movie.getTitle());
-                lblImdbRating.setText(String.valueOf(movie.getImdbRating()));
-                lblVotesCount.setText(String.valueOf(movie.getVotesCount()));
-                lblDescription.setText(movie.getDescription());
-                imvPoster.setImage(new Image(movie.getPosterURL()));
-            }
-        });
 
         btnAdd.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -96,27 +94,37 @@ public class Controller implements Initializable{
             }
         });
 
-        // TODO:
         // Test of showing table
+        // TODO: Improve filling table to avoid making duplication of the whole list
         btnModify.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-           //     tbvMovieListFromDb = new TableView<MovieToSee>();
-               // tbcMovieTitle.setCellValueFactory(new PropertyValueFactory<TableEntry, String>("movieTitle"));
 
                 DatabaseHandling.connectWithDatabase();
-                MovieToSee movieToSee = DatabaseHandling.getElementFromDatabase();
-                tbvMovieListFromDb.setItems(getMoviesToSeeAsTableEntries());
+                DatabaseHandling.getElementFromDatabase();
+
+                // Fills the table
                 tbcMovieTitle.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
-             //   tbcImdbRating.setCellValueFactory(cellData -> cellData.getValue().imdbRatingProperty());
+                tbcImdbRating.setCellValueFactory(cellData -> cellData.getValue().imdbRatingProperty());
+                tbcPremiereDate.setCellValueFactory(cellData -> cellData.getValue().premiereDateProperty());
+                tbcLength.setCellValueFactory(cellData -> cellData.getValue().lengthProperty());
                 tbcGenre.setCellValueFactory(cellData -> cellData.getValue().genreProperty());
                 tbvMovieListFromDb.setItems(getMoviesToSeeAsTableEntries());
-
-               // moviesToSeeAsTableEntries.add(movieToSee);
-                //tbcMovieTitle.setCellValueFactory(cellData -> cellData.getValue().getImdbMovie().getTitle());
-                //tbcMovieTitle.setCellValueFactory(new PropertyValueFactory<MovieToSee, String>("title"));
             }
         });
+
+        // Selected item in table changed
+        tbvMovieListFromDb.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TableEntry>() {
+            @Override
+            public void changed(ObservableValue<? extends TableEntry> observable, TableEntry oldValue, TableEntry newValue) {
+                if(tbvMovieListFromDb.getSelectionModel().getSelectedItem() != null)
+                {
+                    setMovieInformationsInMainWindow(newValue.getImdbID());
+                    System.out.println(newValue.toString());
+                }
+            }
+        });
+
     }
 
     public static void processMovieToSeeObjectsToTableEntries(MovieToSee movieToSee)
@@ -124,5 +132,42 @@ public class Controller implements Initializable{
         moviesToSeeAsTableEntries.add(new TableEntry(movieToSee.getImdbMovie().getTitle(), movieToSee.getImdbMovie().getImdbRating(),
                 movieToSee.getImdbMovie().getPremiereDate(), movieToSee.getImdbMovie().getLength(), movieToSee.getImdbMovie().getGenre(),
                 movieToSee.getImdbMovie().getImdbID()));
+    }
+
+/*    // Przekazywać IMDb ID, tymczasowe rozwiązanie z przekazywaniem całego obiektu dla testu
+    public void setMovieInformationsInMainWindow(TableEntry tableEntry)
+    {
+        lblMovieTitle.setText(tableEntry.getTitle());
+        lblImdbRating.setText(String.valueOf(tableEntry.getImdbRating()));
+        lblPremiereDate.setText(tableEntry.getPremiereDate());
+        lblLength.setText(String.valueOf(tableEntry.getLength() + " min"));
+        lblGenre.setText(tableEntry.getGenre());
+    }*/
+
+    public void setMovieInformationsInMainWindow(String imdbID)
+    {
+        MovieToSee movieToSee = moviesToSee.get(imdbID);
+        movieToSee.toString();
+
+        imvPoster.setImage(new Image(movieToSee.getImdbMovie().getPosterURL()));
+        lblMovieTitle.setText(movieToSee.getImdbMovie().getTitle());
+        lblImdbRating.setText(String.valueOf(movieToSee.getImdbMovie().getImdbRating()));
+        lblVotesCount.setText(String.valueOf(movieToSee.getImdbMovie().getVotesCount()));
+        lblMetascore.setText(String.valueOf(movieToSee.getImdbMovie().getMetascore()));
+        lblPremiereDate.setText(movieToSee.getImdbMovie().getPremiereDate());
+        lblLength.setText(String.valueOf(movieToSee.getImdbMovie().getLength() + " min"));
+        lblGenre.setText(movieToSee.getImdbMovie().getGenre());
+        lblDescription.setText(movieToSee.getImdbMovie().getDescription());
+
+        lblSource.setText(String.valueOf("Źródło: " + movieToSee.getSource()));
+        lblVersion.setText(String.valueOf("Wersja: " + movieToSee.getVersion()));
+        lblContainer.setText(String.valueOf("Kodek: " + movieToSee.getContainer()));
+        lblResolution.setText(String.valueOf("Rozdzielczość: " + movieToSee.getResolution()));
+        lblAudioSubtitles.setText(String.valueOf("Audio / Napisy: " + movieToSee.getAudioSub()));
+    }
+
+    public static void saveMovieToMap(MovieToSee movieToSee)
+    {
+        moviesToSee.put(movieToSee.getImdbMovie().getImdbID(), movieToSee);
     }
 }

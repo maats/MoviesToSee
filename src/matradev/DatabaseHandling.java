@@ -34,7 +34,7 @@ public class DatabaseHandling {
         return true;
     }
 
-    // TODO: Zamkniecie polaczen (close())
+    // TODO: Add closing connection (close())
     public static boolean insertElementIntoDatabase(MovieToSee movieToSee, boolean movieParameters)
     {
         String sqlCommand;
@@ -76,12 +76,11 @@ public class DatabaseHandling {
         return true;
     }
 
-    // TODO: Zamkniecie polaczen (close())
-    // TODO: Zmienic zwracanie obiektu klasy MovieToSee na jakas liste
+    // TODO: Add closing connection (close())
+    // TODO: Add parsing movie parameters from database
     public static MovieToSee getElementFromDatabase()
     {
         MovieToSee movieToSee = null;
-        Controller controller = new Controller();
 
         try {
             statement = connection.createStatement();
@@ -103,7 +102,8 @@ public class DatabaseHandling {
                 movieToSee = new MovieToSee(imdbMovie);
 
                 Controller.processMovieToSeeObjectsToTableEntries(movieToSee);
-                System.out.println(title + " " + imdbRating + " " + votesCount + " " + metascore);
+                Controller.saveMovieToMap(movieToSee);
+                System.out.println(title + " " + imdbRating + " " + votesCount + " " + metascore); // For test purposes
             }
         } catch (SQLException e) {
             System.out.println(e.getClass().getName() + ": " + e.getMessage());
@@ -112,16 +112,4 @@ public class DatabaseHandling {
         return movieToSee;
     }
 
-/*    public static boolean insertElementIntoDatabase(String[] args)
-    {
-        try {
-            statement = connection.createStatement();
-            String sqlCommand = "INSERT INTO movies VALUES (" + args[0] + ", '" + args[1] + "', " + args[2] + ", " + args[3] + ");";
-            statement.executeUpdate(sqlCommand);
-        } catch (SQLException e) {
-            System.out.println(e.getClass().getName() + ": " + e.getMessage());
-            return false;
-        }
-        return true;
-    }*/
 }

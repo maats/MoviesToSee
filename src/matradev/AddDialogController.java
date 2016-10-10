@@ -17,7 +17,10 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
+ * Controller of Add Dialog Window
  * Created by Mateusz on 04.10.2016.
+ * TODO: Check if element exists in database (db requires unique imdb_id)
+ * TODO: Change the way of passing information about problem with search (dynamic text in label instead of enabling label)
  */
 public class AddDialogController implements Initializable {
 
@@ -75,7 +78,7 @@ public class AddDialogController implements Initializable {
                 String movieYear = txtMovieYear.getText();
                 ImdbJsonReader imdbJsonReader = new ImdbJsonReader();
 
-                // Mozna dodac sprawdzanie czy format ID imdb (tt1234567) jest wprowadzany
+                // TODO: Check if IMDb ID is entered in valid format (tt1234567)
                 if(movieId.length() != 0)
                 {
                     imdbJsonReader.parseImdbId(movieId);
@@ -145,11 +148,11 @@ public class AddDialogController implements Initializable {
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == buttonTypeYes){
                     setMovieParameters = true;
-                    vboxMovieParameters.setDisable(false); // Unlock VBox with choicebox controls
+                    vboxMovieParameters.setDisable(false); // Enable VBox with choicebox controls
                 } else {
                     setMovieParameters = false;
                 }
-                vboxSaveButtons.setDisable(false); // Unlock VBox with save buttons
+                vboxSaveButtons.setDisable(false); // Enable VBox with save buttons
             }
         });
 

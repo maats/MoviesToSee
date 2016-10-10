@@ -10,14 +10,13 @@ import java.net.URL;
 import java.util.Map;
 
 /**
+ * Class used for parsing data from IMDb API (omdbapi.com)
  * Created by Mateusz on 03.10.2016.
  */
 public class ImdbJsonReader {
 
     String parseUrl;
-    //String parsedData;
     private static ObjectMapper objectMapper = new ObjectMapper();
-    private static Map<String, Object> userData = null;
     private JsonNode node;
     private ImdbMovie movie;
 
@@ -27,17 +26,28 @@ public class ImdbJsonReader {
         return movie;
     }
 
+    /**
+     * Parses data from API by IMDb ID
+     * @param movieId IMDb ID
+     * @return Node with movie data
+     */
     public JsonNode parseImdbId(String movieId)
     {
         parseUrl = "http://www.omdbapi.com/?i=" + movieId + "&plot=short&r=json";
         try {
             node = objectMapper.readValue(new URL(parseUrl), JsonNode.class);
         } catch (IOException e) {
-            System.out.println("Problem z połączeniem API IMDb...");
+            System.out.println("Connection problem with IMDb API. Check your internet connection.");
         }
         return node;
     }
 
+    /**
+     * Parses data from API by movie title and year
+     * @param movieTitle Title of movie
+     * @param movieYear Premiere year of movie (optional)
+     * @return Node with movie data
+     */
     public JsonNode parseImdbByMovieTitleAndYear(String movieTitle, String movieYear)
     {
         movieTitle = movieTitle.replaceAll(" ", "+");
@@ -46,11 +56,15 @@ public class ImdbJsonReader {
         try {
             node = objectMapper.readValue(new URL(parseUrl), JsonNode.class);
         } catch (IOException e) {
-            System.out.println("Problem z połączeniem API IMDb...");
+            System.out.println("Connection problem with IMDb API. Check your internet connection.");
         }
         return node;
     }
 
+    /**
+     * Method process data from node to proper types
+     * TODO: Exception handling when some data in node is N/A
+     */
     public void processParsedData()
     {
         // Process title from parser and convert to string
@@ -65,7 +79,7 @@ public class ImdbJsonReader {
         try {
             imdbRating = Float.parseFloat(imdbRatingAsString);
         } catch (NumberFormatException e) {
-            System.out.println("Wyjątek");
+            System.out.println("Problem with converting IMDb rating to float value");
         }
         System.out.println("Ocena IMDb: " + imdbRating);
 
@@ -77,7 +91,7 @@ public class ImdbJsonReader {
         try {
             votesCount = Integer.parseInt(votesCountAsString);
         } catch (NumberFormatException e) {
-            System.out.println("Wyjątek");
+            System.out.println("Problem with converting votes count to int value");
         }
         System.out.println("Liczba głosów: " + votesCount);
 
@@ -123,6 +137,10 @@ public class ImdbJsonReader {
         movie = new ImdbMovie(title, imdbRating, votesCount, metascore, premiereDate, length, genre, description, posterURL, imdbID);
     }
 
+    /**
+     * Method used to perform tests
+     * @param args
+     */
     public static void main(String[] args) {
 
         ImdbJsonReader reader = new ImdbJsonReader();

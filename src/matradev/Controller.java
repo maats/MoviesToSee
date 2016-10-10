@@ -34,17 +34,22 @@ public class Controller implements Initializable{
     @FXML private Label lblVotesCount;
     @FXML private Label lblDescription;
     @FXML private ImageView imvPoster;
-    @FXML private TableView<MovieToSee> tbvMovieListFromDb;
-    @FXML private TableColumn<MovieToSee, String> tbcGenre;
-    @FXML private TableColumn<MovieToSee, String> tbcImdbRating;
-    @FXML private TableColumn<MovieToSee, String> tbcLength;
-    @FXML private TableColumn<MovieToSee, String> tbcMovieTitle;
-    @FXML private TableColumn<MovieToSee, String> tbcPremiereDate;
+    @FXML private TableView<TableEntry> tbvMovieListFromDb;
+    @FXML private TableColumn<TableEntry, String> tbcGenre;
+    @FXML private TableColumn<TableEntry, Float> tbcImdbRating;
+    @FXML private TableColumn<TableEntry, Integer> tbcLength;
+    @FXML private TableColumn<TableEntry, String> tbcMovieTitle;
+    @FXML private TableColumn<TableEntry, String> tbcPremiereDate;
     private String movieIdForParser;
     private Image poster;
     ImdbJsonReader imdbJsonReader = new ImdbJsonReader();
     private static Map<String, Object> userData = null;
-    private ObservableList<MovieToSee> moviesToSee = FXCollections.observableArrayList();
+    static ObservableList<TableEntry> moviesToSeeAsTableEntries = FXCollections.observableArrayList();
+    static Map<Integer, MovieToSee> moviesToSee;
+
+    public ObservableList<TableEntry> getMoviesToSeeAsTableEntries() {
+        return moviesToSeeAsTableEntries;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -83,7 +88,6 @@ public class Controller implements Initializable{
                     Stage stage = new Stage();
                     stage.setTitle("Wyszukaj film");
                     stage.setScene(new Scene(root));
-                    //stage.setScene(new Scene(root, 490, 560));
                     stage.setResizable(false);
                     stage.show();
                 } catch (IOException e) {
@@ -92,16 +96,33 @@ public class Controller implements Initializable{
             }
         });
 
+        // TODO:
+        // Test of showing table
         btnModify.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+           //     tbvMovieListFromDb = new TableView<MovieToSee>();
+               // tbcMovieTitle.setCellValueFactory(new PropertyValueFactory<TableEntry, String>("movieTitle"));
+
                 DatabaseHandling.connectWithDatabase();
                 MovieToSee movieToSee = DatabaseHandling.getElementFromDatabase();
-                moviesToSee.add(movieToSee);
+                tbvMovieListFromDb.setItems(getMoviesToSeeAsTableEntries());
+                tbcMovieTitle.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
+             //   tbcImdbRating.setCellValueFactory(cellData -> cellData.getValue().imdbRatingProperty());
+                tbcGenre.setCellValueFactory(cellData -> cellData.getValue().genreProperty());
+                tbvMovieListFromDb.setItems(getMoviesToSeeAsTableEntries());
+
+               // moviesToSeeAsTableEntries.add(movieToSee);
                 //tbcMovieTitle.setCellValueFactory(cellData -> cellData.getValue().getImdbMovie().getTitle());
-                tbcMovieTitle.setCellValueFactory(new PropertyValueFactory<MovieToSee, String>("title"));
+                //tbcMovieTitle.setCellValueFactory(new PropertyValueFactory<MovieToSee, String>("title"));
             }
         });
+    }
 
+    public static void processMovieToSeeObjectsToTableEntries(MovieToSee movieToSee)
+    {
+        moviesToSeeAsTableEntries.add(new TableEntry(movieToSee.getImdbMovie().getTitle(), movieToSee.getImdbMovie().getImdbRating(),
+                movieToSee.getImdbMovie().getPremiereDate(), movieToSee.getImdbMovie().getLength(), movieToSee.getImdbMovie().getGenre(),
+                movieToSee.getImdbMovie().getImdbID()));
     }
 }

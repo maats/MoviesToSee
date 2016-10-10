@@ -34,6 +34,7 @@ public class DatabaseHandling {
         return true;
     }
 
+    // TODO: Zamkniecie polaczen (close())
     public static boolean insertElementIntoDatabase(MovieToSee movieToSee, boolean movieParameters)
     {
         String sqlCommand;
@@ -75,9 +76,12 @@ public class DatabaseHandling {
         return true;
     }
 
+    // TODO: Zamkniecie polaczen (close())
+    // TODO: Zmienic zwracanie obiektu klasy MovieToSee na jakas liste
     public static MovieToSee getElementFromDatabase()
     {
         MovieToSee movieToSee = null;
+        Controller controller = new Controller();
 
         try {
             statement = connection.createStatement();
@@ -94,9 +98,11 @@ public class DatabaseHandling {
                 String description = rs.getString("description");
                 String posterURL = rs.getString("poster_url");
                 String imdbID = rs.getString("imdb_id");
-                ImdbMovie imdbMovie = new ImdbMovie(title, imdbRating, votesCount, metascore, premiereDate, length, genre, description, posterURL, imdbID);
+                ImdbMovie imdbMovie = new ImdbMovie(title, imdbRating, votesCount, metascore, premiereDate, length,
+                        genre, description, posterURL, imdbID);
                 movieToSee = new MovieToSee(imdbMovie);
 
+                Controller.processMovieToSeeObjectsToTableEntries(movieToSee);
                 System.out.println(title + " " + imdbRating + " " + votesCount + " " + metascore);
             }
         } catch (SQLException e) {

@@ -65,7 +65,7 @@ public class AddDialogController implements Initializable {
             e.printStackTrace();
         }
         imvPoster.setImage(poster);
-        loadMovieParametersInChoiceBoxes();
+        loadMovieParametersToChoiceBoxes();
 
         btnSearch.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -146,11 +146,10 @@ public class AddDialogController implements Initializable {
                 if (result.get() == buttonTypeYes){
                     setMovieParameters = true;
                     vboxMovieParameters.setDisable(false); // Unlock VBox with choicebox controls
-                    vboxSaveButtons.setDisable(false); // Unlock VBox with save buttons
                 } else {
                     setMovieParameters = false;
-                    vboxSaveButtons.setDisable(false); // Unlock VBox with save buttons
                 }
+                vboxSaveButtons.setDisable(false); // Unlock VBox with save buttons
             }
         });
 
@@ -208,9 +207,9 @@ public class AddDialogController implements Initializable {
         return movieParams;
     }
 
-    public void loadMovieParametersInChoiceBoxes()
+    public void loadMovieParametersToChoiceBoxes()
     {
-        // Przetwarzanie mapy
+        // Processing maps
         mapAudioSubtitles = movieToSee.getAudioSubs();
         mapContainers = movieToSee.getContainers();
         mapResolutions = movieToSee.getResolutions();

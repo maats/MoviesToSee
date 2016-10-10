@@ -37,11 +37,6 @@ public class ImdbMovie {
         return imdbRating;
     }
 
-    public String getImdbRatingAsDecimal()
-    {
-        return String.format("");
-    }
-
     public int getVotesCount() {
         return votesCount;
     }

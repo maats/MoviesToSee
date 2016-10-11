@@ -77,7 +77,6 @@ public class DatabaseHandling {
     }
 
     // TODO: Add closing connection (close())
-    // TODO: Add parsing movie parameters from database
     public static MovieToSee getElementFromDatabase()
     {
         MovieToSee movieToSee = null;
@@ -85,8 +84,7 @@ public class DatabaseHandling {
         try {
             statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM moviestosee");
-            while(rs.next())
-            {
+            while(rs.next()) {
                 String title = rs.getString("movie_title");
                 float imdbRating = rs.getFloat("imdb_rating");
                 int votesCount = rs.getInt("votes_count");
@@ -97,9 +95,26 @@ public class DatabaseHandling {
                 String description = rs.getString("description");
                 String posterURL = rs.getString("poster_url");
                 String imdbID = rs.getString("imdb_id");
+                boolean seen = rs.getBoolean("seen");
+                boolean movieParameters = rs.getBoolean("movie_parameters");
+
                 ImdbMovie imdbMovie = new ImdbMovie(title, imdbRating, votesCount, metascore, premiereDate, length,
                         genre, description, posterURL, imdbID);
-                movieToSee = new MovieToSee(imdbMovie);
+
+                if (movieParameters)
+                {
+                    int source = rs.getInt("source");
+                    int version = rs.getInt("version");
+                    int container = rs.getInt("container");
+                    int resolution = rs.getInt("resolution");
+                    int audioSubs = rs.getInt("audio_subs");
+
+                    movieToSee = new MovieToSee(imdbMovie, source, version, container, resolution, audioSubs);
+                }
+                else
+                {
+                    movieToSee = new MovieToSee(imdbMovie);
+                }
 
                 Controller.processMovieToSeeObjectsToTableEntries(movieToSee);
                 Controller.saveMovieToMap(movieToSee);

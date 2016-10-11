@@ -1,14 +1,30 @@
 package matradev;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.*;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
+ * PostgreSQL database handler
  * Created by Mateusz on 03.10.2016.
+ * TODO: Later add dialog with entering server and login data to database
  */
 public class DatabaseHandling {
 
     private static Connection connection = null;
     private static Statement statement = null;
+    private ObservableList<TableEntry> moviesToSeeAsTableEntries = FXCollections.observableArrayList();
+
+    public ObservableList<TableEntry> getMoviesToSeeAsTableEntries() {
+        return moviesToSeeAsTableEntries;
+    }
+
+    public void setMoviesToSeeAsTableEntries(ObservableList<TableEntry> moviesToSeeAsTableEntries) {
+        this.moviesToSeeAsTableEntries = moviesToSeeAsTableEntries;
+    }
 
     public static void main(String[] args) {
 /*        boolean tmp;
@@ -77,9 +93,10 @@ public class DatabaseHandling {
     }
 
     // TODO: Add closing connection (close())
-    public static MovieToSee getElementFromDatabase()
+    public Map<String, MovieToSee> getElementFromDatabase()
     {
         MovieToSee movieToSee = null;
+        Map<String, MovieToSee> moviesToSee = new TreeMap<>();
 
         try {
             statement = connection.createStatement();
@@ -116,15 +133,21 @@ public class DatabaseHandling {
                     movieToSee = new MovieToSee(imdbMovie);
                 }
 
-                Controller.processMovieToSeeObjectsToTableEntries(movieToSee);
-                Controller.saveMovieToMap(movieToSee);
+                //Controller.processMovieToSeeObjectsToTableEntries(movieToSee);
+                //Controller.saveMovieToMap(movieToSee);
+                moviesToSee.put(movieToSee.getImdbMovie().getImdbID(), movieToSee);
+
+                moviesToSeeAsTableEntries.add(new TableEntry(movieToSee.getImdbMovie().getTitle(), movieToSee.getImdbMovie().getImdbRating(),
+                        movieToSee.getImdbMovie().getPremiereDate(), movieToSee.getImdbMovie().getLength(), movieToSee.getImdbMovie().getGenre(),
+                        movieToSee.getImdbMovie().getImdbID()));
+
                 System.out.println(title + " " + imdbRating + " " + votesCount + " " + metascore); // For test purposes
             }
         } catch (SQLException e) {
             System.out.println(e.getClass().getName() + ": " + e.getMessage());
         }
 
-        return movieToSee;
+        return moviesToSee;
     }
 
 }

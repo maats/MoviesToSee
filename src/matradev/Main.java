@@ -23,6 +23,7 @@ public class Main extends Application {
         Parent root = loader.load(getClass().getResource("BasicApplication_css.fxml"));
 
         Scene scene = new Scene(root);
+        primaryStage.setTitle("MovieToSee");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

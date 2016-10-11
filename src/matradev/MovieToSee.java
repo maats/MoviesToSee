@@ -5,7 +5,7 @@ import java.util.TreeMap;
 
 /**
  * Created by Mateusz on 05.10.2016.
- * TODO: Make static maps with values instead of adding it by constructor
+ * TODO: Add boolean field to easy recognize if movie has params or not
  */
 public class MovieToSee {
 
@@ -15,35 +15,37 @@ public class MovieToSee {
     private int container;
     private int resolution;
     private int audioSub;
-    private static final Map<Integer, String> containers = new TreeMap<>();
-    private static final Map<Integer, String> sources = new TreeMap<>();
-    private static final Map<Integer, String> resolutions = new TreeMap<>();
-    private static final Map<Integer, String> audioSubs = new TreeMap<>();
-    private static final Map<Integer, String> versions = new TreeMap<>();
-
-    static{
-
-    }
+    private static final Map<Integer, String> containers = new TreeMap<Integer, String>(){{
+        put(0, "x264");
+        put(1, "x265");
+        put(2, "AVC");
+        put(3, "XviD");
+    }};
+    private static final Map<Integer, String> sources = new TreeMap<Integer, String>(){{
+        put(0, "BluRay");
+        put(1, "WEBRip");
+        put(2, "WEB-DL");
+        put(3, "HDRip");
+        put(4, "DVDRip");
+    }};
+    private static final Map<Integer, String> resolutions = new TreeMap<Integer, String>(){{
+        put(0, "1080p");
+        put(1, "720p");
+        put(2, "480p");
+    }};
+    private static final Map<Integer, String> audioSubs = new TreeMap<Integer, String>(){{
+        put(0, "polskie napisy");
+        put(1, "polski lektor / polskie napisy");
+        put(2, "polski dubbing / polskie napisy");
+        put(3, "polski lektor");
+        put(4, "polski dubbing");
+    }};
+    private static final Map<Integer, String> versions = new TreeMap<Integer, String>(){{
+        put(0, "2D");
+        put(1, "3D");
+    }};
 
     public MovieToSee() {
-        containers.put(0, "x264");
-        containers.put(1, "XviD");
-        containers.put(2, "AVC");
-        sources.put(0, "BluRay");
-        sources.put(1, "WEBRip");
-        sources.put(2, "WEB-DL");
-        sources.put(3, "HDRip");
-        sources.put(4, "DVDRip");
-        resolutions.put(0, "1080p");
-        resolutions.put(1, "720p");
-        resolutions.put(2, "480p");
-        audioSubs.put(0, "polskie napisy");
-        audioSubs.put(1, "polski lektor / polskie napisy");
-        audioSubs.put(2, "polski dubbing / polskie napisy");
-        audioSubs.put(3, "polski lektor");
-        audioSubs.put(4, "polski dubbing");
-        versions.put(0, "2D");
-        versions.put(1, "3D");
     }
 
     public MovieToSee(ImdbMovie imdbMovie) {

@@ -164,14 +164,6 @@ public class AddDialogController implements Initializable {
         });
     }
 
-    public ImdbMovie getImdbMovie() {
-        return imdbMovie;
-    }
-
-    public MovieToSee getMovieToSee() {
-        return movieToSee;
-    }
-
     public int[] getMovieParametersFromChoiceBoxes()
     {
         int[] movieParams = new int[5];

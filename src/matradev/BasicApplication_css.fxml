@@ -135,7 +135,7 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
                         </Label>
-                        <Label fx:id="lblDescription" minWidth="520.0" prefWidth="520.0" text="(treść opisu)(treść opisu)(treść opisu)(treść opisu)" wrapText="true">
+                        <Label fx:id="lblDescription" minHeight="60.0" minWidth="490.0" wrapText="true">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>

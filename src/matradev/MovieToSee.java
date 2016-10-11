@@ -5,7 +5,6 @@ import java.util.TreeMap;
 
 /**
  * Created by Mateusz on 05.10.2016.
- * TODO: Add boolean field to easy recognize if movie has params or not
  */
 public class MovieToSee {
 
@@ -15,6 +14,9 @@ public class MovieToSee {
     private int container;
     private int resolution;
     private int audioSub;
+    private boolean seen;
+    private boolean movieParameters;
+
     private static final Map<Integer, String> containers = new TreeMap<Integer, String>(){{
         put(0, "x264");
         put(1, "x265");
@@ -29,9 +31,10 @@ public class MovieToSee {
         put(4, "DVDRip");
     }};
     private static final Map<Integer, String> resolutions = new TreeMap<Integer, String>(){{
-        put(0, "1080p");
-        put(1, "720p");
-        put(2, "480p");
+        put(0, "2160p");
+        put(1, "1080p");
+        put(2, "720p");
+        put(3, "480p");
     }};
     private static final Map<Integer, String> audioSubs = new TreeMap<Integer, String>(){{
         put(0, "polskie napisy");
@@ -59,6 +62,17 @@ public class MovieToSee {
         this.container = container;
         this.resolution = resolution;
         this.audioSub = audioSub;
+    }
+
+    public MovieToSee(ImdbMovie imdbMovie, int source, int version, int container, int resolution, int audioSub, boolean seen, boolean movieParameters) {
+        this.imdbMovie = imdbMovie;
+        this.source = source;
+        this.version = version;
+        this.container = container;
+        this.resolution = resolution;
+        this.audioSub = audioSub;
+        this.seen = seen;
+        this.movieParameters = movieParameters;
     }
 
     public ImdbMovie getImdbMovie() {

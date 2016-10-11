@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -33,7 +34,6 @@ import java.util.TreeMap;
  */
 public class Controller implements Initializable{
 
-    @FXML private Button btnParse;
     @FXML private Button btnAdd;
     @FXML private Button btnModify;
     @FXML private Button btnDelete;
@@ -57,10 +57,10 @@ public class Controller implements Initializable{
     @FXML private TableColumn<TableEntry, Number> tbcLength;
     @FXML private TableColumn<TableEntry, String> tbcMovieTitle;
     @FXML private TableColumn<TableEntry, String> tbcPremiereDate;
-    private String movieIdForParser;
+
     private Image poster;
-    static ObservableList<TableEntry> moviesToSeeAsTableEntries = FXCollections.observableArrayList();
-    static Map<String, MovieToSee> moviesToSee = new TreeMap<String, MovieToSee>();
+    private ObservableList<TableEntry> moviesToSeeAsTableEntries = FXCollections.observableArrayList();
+    private Map<String, MovieToSee> moviesToSee = new TreeMap<String, MovieToSee>();
 
     public ObservableList<TableEntry> getMoviesToSeeAsTableEntries() {
         return moviesToSeeAsTableEntries;
@@ -95,13 +95,15 @@ public class Controller implements Initializable{
         });
 
         // Test of showing table
-        // TODO: Improve filling table to avoid making duplication of the whole list
+        // TODO: Improve sorting by premiere date
         btnModify.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                DatabaseHandling databaseHandling = new DatabaseHandling();
 
                 DatabaseHandling.connectWithDatabase();
-                DatabaseHandling.getElementFromDatabase();
+                moviesToSee = databaseHandling.getElementFromDatabase();
+                moviesToSeeAsTableEntries = databaseHandling.getMoviesToSeeAsTableEntries();
 
                 // Fills the table
                 tbcMovieTitle.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
@@ -124,27 +126,16 @@ public class Controller implements Initializable{
                 }
             }
         });
-
     }
 
-    public static void processMovieToSeeObjectsToTableEntries(MovieToSee movieToSee)
+/*    public static void processMovieToSeeObjectsToTableEntries(MovieToSee movieToSee)
     {
         moviesToSeeAsTableEntries.add(new TableEntry(movieToSee.getImdbMovie().getTitle(), movieToSee.getImdbMovie().getImdbRating(),
                 movieToSee.getImdbMovie().getPremiereDate(), movieToSee.getImdbMovie().getLength(), movieToSee.getImdbMovie().getGenre(),
                 movieToSee.getImdbMovie().getImdbID()));
-    }
-
-/*    // Przekazywać IMDb ID, tymczasowe rozwiązanie z przekazywaniem całego obiektu dla testu
-    public void setMovieInformationsInMainWindow(TableEntry tableEntry)
-    {
-        lblMovieTitle.setText(tableEntry.getTitle());
-        lblImdbRating.setText(String.valueOf(tableEntry.getImdbRating()));
-        lblPremiereDate.setText(tableEntry.getPremiereDate());
-        lblLength.setText(String.valueOf(tableEntry.getLength() + " min"));
-        lblGenre.setText(tableEntry.getGenre());
     }*/
 
-    public void setMovieInformationsInMainWindow(String imdbID)
+    private void setMovieInformationsInMainWindow(String imdbID)
     {
         MovieToSee movieToSee = moviesToSee.get(imdbID);
         movieToSee.toString();
@@ -166,8 +157,8 @@ public class Controller implements Initializable{
         lblAudioSubtitles.setText(String.valueOf("Audio / Napisy: " + movieToSee.getAudioSub()));
     }
 
-    public static void saveMovieToMap(MovieToSee movieToSee)
+/*    public static void saveMovieToMap(MovieToSee movieToSee)
     {
         moviesToSee.put(movieToSee.getImdbMovie().getImdbID(), movieToSee);
-    }
+    }*/
 }

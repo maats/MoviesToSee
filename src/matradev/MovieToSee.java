@@ -20,8 +20,7 @@ public class MovieToSee {
     private static final Map<Integer, String> containers = new TreeMap<Integer, String>(){{
         put(0, "x264");
         put(1, "x265");
-        put(2, "AVC");
-        put(3, "XviD");
+        put(2, "XviD");
     }};
     private static final Map<Integer, String> sources = new TreeMap<Integer, String>(){{
         put(0, "BluRay");

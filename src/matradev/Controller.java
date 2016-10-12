@@ -51,6 +51,10 @@ public class Controller implements Initializable{
     @FXML private Label lblResolution;
     @FXML private Label lblAudioSubtitles;
     @FXML private ImageView imvPoster;
+    @FXML private ImageView imvSource;
+    @FXML private ImageView imvVersion;
+    @FXML private ImageView imvContainer;
+    @FXML private ImageView imvResolution;
     @FXML private TableView<TableEntry> tbvMovieListFromDb;
     @FXML private TableColumn<TableEntry, String> tbcGenre;
     @FXML private TableColumn<TableEntry, Number> tbcImdbRating;
@@ -155,6 +159,142 @@ public class Controller implements Initializable{
         lblContainer.setText(String.valueOf("Kodek: " + movieToSee.getContainer()));
         lblResolution.setText(String.valueOf("Rozdzielczość: " + movieToSee.getResolution()));
         lblAudioSubtitles.setText(String.valueOf("Audio / Napisy: " + movieToSee.getAudioSub()));
+
+        setLogotypesOfParameters(movieToSee.getSource(), movieToSee.getVersion(), movieToSee.getContainer(), movieToSee.getResolution(), movieToSee.getAudioSub());
+    }
+
+    private void setLogotypesOfParameters(int source, int version, int container, int resolution, int audioSub)
+    {
+
+        FileInputStream input;
+
+        switch (source)
+        {
+            case 0:
+                try {
+                    input = new FileInputStream("resources/images/sources/bluray.png");
+                    imvSource.setImage(new Image(input));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 1:
+                try {
+                    input = new FileInputStream("resources/images/sources/webrip.png");
+                    imvSource.setImage(new Image(input));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 2:
+                try {
+                    input = new FileInputStream("resources/images/sources/webdl.png");
+                    imvSource.setImage(new Image(input));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 3:
+                try {
+                    input = new FileInputStream("resources/images/sources/hdrip.png");
+                    imvSource.setImage(new Image(input));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 4:
+                try {
+                    input = new FileInputStream("resources/images/sources/dvdrip.png");
+                    imvSource.setImage(new Image(input));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+
+        switch (version)
+        {
+            case 0:
+                try {
+                    input = new FileInputStream("resources/images/versions/2d.png");
+                    imvVersion.setImage(new Image(input));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 1:
+                try {
+                    input = new FileInputStream("resources/images/versions/3d.png");
+                    imvVersion.setImage(new Image(input));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+
+        switch (container)
+        {
+            case 0:
+                try {
+                    input = new FileInputStream("resources/images/containers/x264.png");
+                    imvContainer.setImage(new Image(input));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 1:
+                try {
+                    input = new FileInputStream("resources/images/containers/x265.png");
+                    imvContainer.setImage(new Image(input));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 2:
+                try {
+                    input = new FileInputStream("resources/images/containers/xvid.png");
+                    imvContainer.setImage(new Image(input));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+
+        switch (resolution)
+        {
+            case 0:
+                try {
+                    input = new FileInputStream("resources/images/resolutions/2160p.png");
+                    imvResolution.setImage(new Image(input));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 1:
+                try {
+                    input = new FileInputStream("resources/images/resolutions/1080p.png");
+                    imvResolution.setImage(new Image(input));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 2:
+                try {
+                    input = new FileInputStream("resources/images/resolutions/720p.png");
+                    imvResolution.setImage(new Image(input));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 3:
+                try {
+                    input = new FileInputStream("resources/images/resolutions/480p.png");
+                    imvResolution.setImage(new Image(input));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
     }
 
 /*    public static void saveMovieToMap(MovieToSee movieToSee)

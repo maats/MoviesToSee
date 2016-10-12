@@ -247,6 +247,26 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
                         </Label>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fx:id="imvSource" fitHeight="36.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <HBox.margin>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                 </HBox.margin></ImageView>
+                              <ImageView fx:id="imvVersion" fitHeight="36.0" fitWidth="50.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                                 <HBox.margin>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                 </HBox.margin></ImageView>
+                              <ImageView fx:id="imvContainer" fitHeight="36.0" fitWidth="50.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                                 <HBox.margin>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                 </HBox.margin></ImageView>
+                              <ImageView fx:id="imvResolution" fitHeight="36.0" fitWidth="50.0" layoutX="110.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                                 <HBox.margin>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                 </HBox.margin></ImageView>
+                           </children>
+                        </HBox>
                         <Button fx:id="btnAdd" mnemonicParsing="false" text="Dodaj" />
                         <Button fx:id="btnModify" layoutX="10.0" layoutY="151.0" mnemonicParsing="false" text="Modyfikuj" />
                         <Button fx:id="btnDelete" layoutX="10.0" layoutY="176.0" mnemonicParsing="false" text="Usuń" />

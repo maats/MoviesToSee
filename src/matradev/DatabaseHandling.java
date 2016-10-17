@@ -51,6 +51,7 @@ public class DatabaseHandling {
     }
 
     // TODO: Add closing connection (close())
+    // TODO: Add movie params to INSERT command
     public static boolean insertElementIntoDatabase(MovieToSee movieToSee, boolean movieParameters)
     {
         String sqlCommand;
@@ -59,14 +60,14 @@ public class DatabaseHandling {
         {
             // Case if there are movie parameters
             sqlCommand = "INSERT INTO moviestosee (movie_title, imdb_rating, votes_count, metascore, premiere_date, " +
-                    "length, genre, description, poster_url, imdb_id, source, version, container, resolution, audio_subs) " +
-                    "VALUES ('" + movieToSee.getImdbMovie().getTitle() + "', " + movieToSee.getImdbMovie().getImdbRating() +
+                    "length, genre, description, poster_url, imdb_id, source, version, container, resolution, audio_subs, " +
+                    "movie_parameters) VALUES ('" + movieToSee.getImdbMovie().getTitle() + "', " + movieToSee.getImdbMovie().getImdbRating() +
                     ", " + movieToSee.getImdbMovie().getVotesCount() + ", " + movieToSee.getImdbMovie().getMetascore() +
                     ", '" + movieToSee.getImdbMovie().getPremiereDate() + "', " + movieToSee.getImdbMovie().getLength() +
                     ", '" + movieToSee.getImdbMovie().getGenre() + "', '" + movieToSee.getImdbMovie().getDescription() +
                     "', '" + movieToSee.getImdbMovie().getPosterURL() + "', '" + movieToSee.getImdbMovie().getImdbID() +
                     "', " + movieToSee.getSource() + ", " + movieToSee.getVersion() + ", " + movieToSee.getContainer() +
-                    ", " + movieToSee.getResolution() + ", " + movieToSee.getAudioSub() + ");";
+                    ", " + movieToSee.getResolution() + ", " + movieToSee.getAudioSub() + ", " + movieToSee.isMovieParameters() + ");";
         }
         else
         {

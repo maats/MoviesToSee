@@ -14,39 +14,26 @@
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
-        <Menu mnemonicParsing="false" text="File">
+        <Menu mnemonicParsing="false" text="Plik">
           <items>
-            <MenuItem mnemonicParsing="false" text="New" />
-            <MenuItem mnemonicParsing="false" text="Open…" />
-            <Menu mnemonicParsing="false" text="Open Recent" />
+            <MenuItem fx:id="miLoadLocalDb" mnemonicParsing="false" text="Wczytaj bazę lokalną" />
+            <MenuItem fx:id="miLoadExternalDb" mnemonicParsing="false" text="Wczytaj bazę online" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Close" />
-            <MenuItem mnemonicParsing="false" text="Save" />
-            <MenuItem mnemonicParsing="false" text="Save As…" />
-            <MenuItem mnemonicParsing="false" text="Revert" />
+            <MenuItem fx:id="miSettings" mnemonicParsing="false" text="Ustawienia" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Preferences…" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
+            <MenuItem fx:id="miExit" mnemonicParsing="false" text="Wyjście" />
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
+        <Menu mnemonicParsing="false" text="Film">
           <items>
-            <MenuItem mnemonicParsing="false" text="Undo" />
-            <MenuItem mnemonicParsing="false" text="Redo" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" text="Delete" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" />
-            <MenuItem mnemonicParsing="false" text="Unselect All" />
+            <MenuItem fx:id="miAdd" mnemonicParsing="false" text="Dodaj" />
+            <MenuItem fx:id="miModify" mnemonicParsing="false" text="Modyfikuj" />
+                  <MenuItem fx:id="miDelete" mnemonicParsing="false" text="Usuń" />
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="Help">
+        <Menu mnemonicParsing="false" text="Pomoc">
           <items>
-            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+            <MenuItem fx:id="miAboutApp" mnemonicParsing="false" text="O aplikacji" />
           </items>
         </Menu>
       </menus>
@@ -75,201 +62,193 @@
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                        </Label>
-                        <Label text="Ocena IMDb:">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                        </Label>
-                        <Label layoutX="10.0" layoutY="145.0" text="Liczba głosów:">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                        </Label>
-                        <Label layoutX="10.0" layoutY="118.0" text="Metascore:">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                        </Label>
-                        <Label layoutX="10.0" layoutY="37.0" text="Data premiery:">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                        </Label>
-                        <Label layoutX="10.0" layoutY="64.0" text="Czas trwania:">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
                         </Label>
                         <Label layoutX="10.0" layoutY="91.0" text="Gatunek:">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label text="Ocena IMDb:">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="145.0" text="Liczba głosów:">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="118.0" text="Metascore:">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="64.0" text="Czas trwania:">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="37.0" text="Data premiery:">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin>
                         </Label>
                         <Label text="Opis:">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin>
                         </Label>
-                        <Label fx:id="lblDescription" minHeight="60.0" minWidth="490.0" wrapText="true">
+                        <Label fx:id="lblDescription" alignment="TOP_LEFT" minHeight="60.0" minWidth="480.0" prefHeight="60.0" prefWidth="480.0" wrapText="true">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin>
                         </Label>
                      </children>
                   </VBox>
-                  <VBox layoutX="124.0" layoutY="10.0" prefWidth="200.0" GridPane.columnIndex="2">
+                  <VBox layoutX="124.0" layoutY="10.0" minWidth="90.0" GridPane.columnIndex="2">
                      <children>
                         <Label fx:id="lblMovieTitle" text="(tytuł filmu)">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                        </Label>
-                        <Label fx:id="lblImdbRating" text="(ocena IMDb)">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                        </Label>
-                        <Label fx:id="lblVotesCount" layoutX="10.0" layoutY="145.0" text="(liczba głosów)">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                        </Label>
-                        <Label fx:id="lblMetascore" layoutX="10.0" layoutY="118.0" text="(metascore)">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                        </Label>
-                        <Label fx:id="lblPremiereDate" layoutX="10.0" layoutY="37.0" text="(data premiery)">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                        </Label>
-                        <Label fx:id="lblLength" layoutX="10.0" layoutY="64.0" text="(czas trwania)">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
                         </Label>
                         <Label fx:id="lblGenre" layoutX="10.0" layoutY="91.0" text="(gatunek)">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="lblImdbRating" text="(ocena IMDb)">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="lblVotesCount" layoutX="10.0" layoutY="145.0" text="(liczba głosów)">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="lblMetascore" layoutX="10.0" layoutY="118.0" text="(metascore)">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="lblLength" layoutX="10.0" layoutY="64.0" text="(czas trwania)">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="lblPremiereDate" layoutX="10.0" layoutY="37.0" text="(data premiery)">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin>
                         </Label>
                      </children>
                   </VBox>
                   <VBox GridPane.columnIndex="3">
                      <children>
-                        <Label fx:id="lblSource" layoutX="10.0" layoutY="64.0" text="Źródło:">
+                        <Label fx:id="lblSource" layoutX="10.0" layoutY="64.0">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
                         </Label>
-                        <Label fx:id="lblVersion" text="Wersja:">
+                        <Label fx:id="lblVersion">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin>
                         </Label>
-                        <Label fx:id="lblContainer" layoutX="10.0" layoutY="10.0" text="Kodek:">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                        </Label>
-                        <Label fx:id="lblResolution" layoutX="10.0" layoutY="10.0" text="Rozdzielczość:">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                        </Label>
-                        <Label fx:id="lblAudioSubtitles" layoutX="10.0" layoutY="37.0" text="Audio / Napisy:">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                        </Label>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
+                        <HBox prefWidth="200.0">
                            <children>
                               <ImageView fx:id="imvSource" fitHeight="36.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                  <HBox.margin>
                                     <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                                  </HBox.margin></ImageView>
-                              <ImageView fx:id="imvVersion" fitHeight="36.0" fitWidth="50.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="imvVersion" fitHeight="36.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <HBox.margin>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                        <HBox prefWidth="200.0">
+                           <children>
+                              <ImageView fx:id="imvContainer" fitHeight="36.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                  <HBox.margin>
                                     <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                                  </HBox.margin></ImageView>
-                              <ImageView fx:id="imvContainer" fitHeight="36.0" fitWidth="50.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-                                 <HBox.margin>
-                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                                 </HBox.margin></ImageView>
-                              <ImageView fx:id="imvResolution" fitHeight="36.0" fitWidth="50.0" layoutX="110.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="imvResolution" fitHeight="36.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                  <HBox.margin>
                                     <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                                  </HBox.margin></ImageView>
                            </children>
                         </HBox>
-                        <Button fx:id="btnAdd" mnemonicParsing="false" text="Dodaj" />
-                        <Button fx:id="btnModify" layoutX="10.0" layoutY="151.0" mnemonicParsing="false" text="Modyfikuj" />
-                        <Button fx:id="btnDelete" layoutX="10.0" layoutY="176.0" mnemonicParsing="false" text="Usuń" />
+                        <HBox prefWidth="200.0">
+                           <children>
+                              <ImageView fx:id="imvAudioSub1" fitHeight="36.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <HBox.margin>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                              <ImageView fx:id="imvAudioSub2" fitHeight="36.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <HBox.margin>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                           </children>
+                        </HBox>
                      </children>
                   </VBox>
                   <VBox GridPane.columnSpan="4" GridPane.rowIndex="1">

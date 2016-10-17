@@ -12,7 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -35,7 +34,6 @@ import java.util.TreeMap;
 public class Controller implements Initializable{
 
     @FXML private Button btnAdd;
-    @FXML private Button btnModify;
     @FXML private Button btnDelete;
     @FXML private Label lblDescription;
     @FXML private Label lblGenre;
@@ -46,15 +44,23 @@ public class Controller implements Initializable{
     @FXML private Label lblPremiereDate;
     @FXML private Label lblVotesCount;
     @FXML private Label lblSource;
+    @FXML private Label lblStatus;
     @FXML private Label lblVersion;
-    @FXML private Label lblContainer;
-    @FXML private Label lblResolution;
-    @FXML private Label lblAudioSubtitles;
     @FXML private ImageView imvPoster;
     @FXML private ImageView imvSource;
     @FXML private ImageView imvVersion;
     @FXML private ImageView imvContainer;
     @FXML private ImageView imvResolution;
+    @FXML private ImageView imvAudioSub1;
+    @FXML private ImageView imvAudioSub2;
+    @FXML private MenuItem miAboutApp;
+    @FXML private MenuItem miAdd;
+    @FXML private MenuItem miDelete;
+    @FXML private MenuItem miExit;
+    @FXML private MenuItem miLoadExternalDb;
+    @FXML private MenuItem miLoadLocalDb;
+    @FXML private MenuItem miModify;
+    @FXML private MenuItem miSettings;
     @FXML private TableView<TableEntry> tbvMovieListFromDb;
     @FXML private TableColumn<TableEntry, String> tbcGenre;
     @FXML private TableColumn<TableEntry, Number> tbcImdbRating;
@@ -81,7 +87,20 @@ public class Controller implements Initializable{
         }
         imvPoster.setImage(poster);
 
-        btnAdd.setOnAction(new EventHandler<ActionEvent>() {
+        // Selected item in table changed
+        tbvMovieListFromDb.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TableEntry>() {
+            @Override
+            public void changed(ObservableValue<? extends TableEntry> observable, TableEntry oldValue, TableEntry newValue) {
+                if(tbvMovieListFromDb.getSelectionModel().getSelectedItem() != null)
+                {
+                    setMovieInformationsInMainWindow(newValue.getImdbID());
+                    System.out.println(newValue.toString());
+                }
+            }
+        });
+
+        // Shows new dialog with adding movie form
+        miAdd.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 Parent root;
@@ -98,9 +117,11 @@ public class Controller implements Initializable{
             }
         });
 
-        // Test of showing table
-        // TODO: Improve sorting by premiere date
-        btnModify.setOnAction(new EventHandler<ActionEvent>() {
+        /**
+         * Load informations from external (SQL) database
+         * TODO: Improve sorting by premiere date
+         */
+        miLoadExternalDb.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 DatabaseHandling databaseHandling = new DatabaseHandling();
@@ -116,20 +137,10 @@ public class Controller implements Initializable{
                 tbcLength.setCellValueFactory(cellData -> cellData.getValue().lengthProperty());
                 tbcGenre.setCellValueFactory(cellData -> cellData.getValue().genreProperty());
                 tbvMovieListFromDb.setItems(getMoviesToSeeAsTableEntries());
+                lblStatus.setText("Pomyślnie załadowano bazę danych online");
             }
         });
 
-        // Selected item in table changed
-        tbvMovieListFromDb.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TableEntry>() {
-            @Override
-            public void changed(ObservableValue<? extends TableEntry> observable, TableEntry oldValue, TableEntry newValue) {
-                if(tbvMovieListFromDb.getSelectionModel().getSelectedItem() != null)
-                {
-                    setMovieInformationsInMainWindow(newValue.getImdbID());
-                    System.out.println(newValue.toString());
-                }
-            }
-        });
     }
 
 /*    public static void processMovieToSeeObjectsToTableEntries(MovieToSee movieToSee)
@@ -139,6 +150,10 @@ public class Controller implements Initializable{
                 movieToSee.getImdbMovie().getImdbID()));
     }*/
 
+    /**
+     * Method sets controls in main window
+     * @param imdbID Movie ID
+     */
     private void setMovieInformationsInMainWindow(String imdbID)
     {
         MovieToSee movieToSee = moviesToSee.get(imdbID);
@@ -154,18 +169,19 @@ public class Controller implements Initializable{
         lblGenre.setText(movieToSee.getImdbMovie().getGenre());
         lblDescription.setText(movieToSee.getImdbMovie().getDescription());
 
-        lblSource.setText(String.valueOf("Źródło: " + movieToSee.getSource()));
-        lblVersion.setText(String.valueOf("Wersja: " + movieToSee.getVersion()));
-        lblContainer.setText(String.valueOf("Kodek: " + movieToSee.getContainer()));
-        lblResolution.setText(String.valueOf("Rozdzielczość: " + movieToSee.getResolution()));
-        lblAudioSubtitles.setText(String.valueOf("Audio / Napisy: " + movieToSee.getAudioSub()));
-
         setLogotypesOfParameters(movieToSee.getSource(), movieToSee.getVersion(), movieToSee.getContainer(), movieToSee.getResolution(), movieToSee.getAudioSub());
     }
 
+    /**
+     * Method takes parameters and set icons of movie parameters
+     * @param source ID of source
+     * @param version ID of version
+     * @param container ID of container
+     * @param resolution ID of resolution
+     * @param audioSub ID of audio/subtitles
+     */
     private void setLogotypesOfParameters(int source, int version, int container, int resolution, int audioSub)
     {
-
         FileInputStream input;
 
         switch (source)
@@ -290,6 +306,57 @@ public class Controller implements Initializable{
                 try {
                     input = new FileInputStream("resources/images/resolutions/480p.png");
                     imvResolution.setImage(new Image(input));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+
+        switch (audioSub)
+        {
+            case 0:
+                try {
+                    input = new FileInputStream("resources/images/audiosubs/plsub.png");
+                    imvAudioSub1.setImage(new Image(input));
+                    imvAudioSub2.setImage(null);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 1:
+                try {
+                    input = new FileInputStream("resources/images/audiosubs/plsub.png");
+                    imvAudioSub1.setImage(new Image(input));
+                    input = new FileInputStream("resources/images/audiosubs/pllek.png");
+                    imvAudioSub2.setImage(new Image(input));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 2:
+                try {
+                    input = new FileInputStream("resources/images/audiosubs/plsub.png");
+                    imvAudioSub1.setImage(new Image(input));
+                    input = new FileInputStream("resources/images/audiosubs/pldub.png");
+                    imvAudioSub2.setImage(new Image(input));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 3:
+                try {
+                    input = new FileInputStream("resources/images/audiosubs/pllek.png");
+                    imvAudioSub1.setImage(new Image(input));
+                    imvAudioSub2.setImage(null);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 4:
+                try {
+                    input = new FileInputStream("resources/images/audiosubs/pldub.png");
+                    imvAudioSub1.setImage(new Image(input));
+                    imvAudioSub2.setImage(null);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }

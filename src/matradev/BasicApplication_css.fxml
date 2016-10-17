@@ -271,6 +271,11 @@
             </GridPane>
          </children>
     </AnchorPane>
+      <ToolBar prefHeight="10.0">
+        <items>
+            <Label fx:id="lblStatus" />
+        </items>
+      </ToolBar>
   </children>
   <stylesheets>
     <URL value="@BasicApplication.css" />

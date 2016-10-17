@@ -98,6 +98,14 @@ public class MovieToSee {
         return audioSub;
     }
 
+    public boolean isSeen() {
+        return seen;
+    }
+
+    public boolean isMovieParameters() {
+        return movieParameters;
+    }
+
     public void setImdbMovie(ImdbMovie imdbMovie) {
         this.imdbMovie = imdbMovie;
     }

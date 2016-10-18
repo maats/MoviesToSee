@@ -50,8 +50,6 @@ public class DatabaseHandling {
         return true;
     }
 
-    // TODO: Add closing connection (close())
-    // TODO: Add movie params to INSERT command
     public static boolean insertElementIntoDatabase(MovieToSee movieToSee, boolean movieParameters)
     {
         String sqlCommand;
@@ -79,12 +77,13 @@ public class DatabaseHandling {
                     ", '" + movieToSee.getImdbMovie().getPremiereDate() + "', " + movieToSee.getImdbMovie().getLength() +
                     ", '" + movieToSee.getImdbMovie().getGenre() + "', '" + movieToSee.getImdbMovie().getDescription() +
                     "', '" + movieToSee.getImdbMovie().getPosterURL() + "', '" + movieToSee.getImdbMovie().getImdbID() +
-                    "');";
+                    "', " + movieToSee.isMovieParameters() + ");";
         }
 
         try {
             statement = connection.createStatement();
             statement.executeUpdate(sqlCommand);
+            statement.close();
         } catch (SQLException e) {
             System.out.println(e.getClass().getName() + ": " + e.getMessage());
             return false;
@@ -93,7 +92,6 @@ public class DatabaseHandling {
         return true;
     }
 
-    // TODO: Add closing connection (close())
     public Map<String, MovieToSee> getElementFromDatabase()
     {
         MovieToSee movieToSee = null;
@@ -127,23 +125,21 @@ public class DatabaseHandling {
                     int resolution = rs.getInt("resolution");
                     int audioSubs = rs.getInt("audio_subs");
 
-                    movieToSee = new MovieToSee(imdbMovie, source, version, container, resolution, audioSubs);
+                    movieToSee = new MovieToSee(imdbMovie, source, version, container, resolution, audioSubs, seen, movieParameters);
                 }
                 else
                 {
-                    movieToSee = new MovieToSee(imdbMovie);
+                    movieToSee = new MovieToSee(imdbMovie, seen, movieParameters);
                 }
 
-                //Controller.processMovieToSeeObjectsToTableEntries(movieToSee);
-                //Controller.saveMovieToMap(movieToSee);
                 moviesToSee.put(movieToSee.getImdbMovie().getImdbID(), movieToSee);
 
                 moviesToSeeAsTableEntries.add(new TableEntry(movieToSee.getImdbMovie().getTitle(), movieToSee.getImdbMovie().getImdbRating(),
                         movieToSee.getImdbMovie().getPremiereDate(), movieToSee.getImdbMovie().getLength(), movieToSee.getImdbMovie().getGenre(),
                         movieToSee.getImdbMovie().getImdbID()));
-
-                System.out.println(title + " " + imdbRating + " " + votesCount + " " + metascore); // For test purposes
             }
+            rs.close();
+            statement.close();
         } catch (SQLException e) {
             System.out.println(e.getClass().getName() + ": " + e.getMessage());
         }

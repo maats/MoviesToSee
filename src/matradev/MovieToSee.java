@@ -50,27 +50,18 @@ public class MovieToSee {
     public MovieToSee() {
     }
 
-    public MovieToSee(ImdbMovie imdbMovie) {
-        this.imdbMovie = imdbMovie;
-    }
-
-    public MovieToSee(ImdbMovie imdbMovie, int source, int version, int container, int resolution, int audioSub) {
+    public MovieToSee(ImdbMovie imdbMovie, int source, int version, int container, int resolution, int audioSub, boolean movieParameters) {
         this.imdbMovie = imdbMovie;
         this.source = source;
         this.version = version;
         this.container = container;
         this.resolution = resolution;
         this.audioSub = audioSub;
+        this.movieParameters = movieParameters;
     }
 
-    public MovieToSee(ImdbMovie imdbMovie, int source, int version, int container, int resolution, int audioSub, boolean seen, boolean movieParameters) {
+    public MovieToSee(ImdbMovie imdbMovie, boolean movieParameters) {
         this.imdbMovie = imdbMovie;
-        this.source = source;
-        this.version = version;
-        this.container = container;
-        this.resolution = resolution;
-        this.audioSub = audioSub;
-        this.seen = seen;
         this.movieParameters = movieParameters;
     }
 
@@ -102,32 +93,12 @@ public class MovieToSee {
         return seen;
     }
 
+    public void setSeen(boolean seen) {
+        this.seen = seen;
+    }
+
     public boolean isMovieParameters() {
         return movieParameters;
-    }
-
-    public void setImdbMovie(ImdbMovie imdbMovie) {
-        this.imdbMovie = imdbMovie;
-    }
-
-    public void setSource(int source) {
-        this.source = source;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
-    }
-
-    public void setContainer(int container) {
-        this.container = container;
-    }
-
-    public void setResolution(int resolution) {
-        this.resolution = resolution;
-    }
-
-    public void setAudioSub(int audioSub) {
-        this.audioSub = audioSub;
     }
 
     @Override
@@ -139,6 +110,8 @@ public class MovieToSee {
                 ", container=" + container +
                 ", resolution=" + resolution +
                 ", audioSub=" + audioSub +
+                ", seen=" + seen +
+                ", movieParameters=" + movieParameters +
                 '}';
     }
 

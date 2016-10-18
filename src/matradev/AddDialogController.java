@@ -25,8 +25,6 @@ import java.util.ResourceBundle;
 public class AddDialogController implements Initializable {
 
     @FXML private Button btnAddMovieToSee;
-    @FXML private Button btnCancel;
-    @FXML private Button btnOk;
     @FXML private Button btnSaveInDb;
     @FXML private Button btnSaveLocal;
     @FXML private Button btnSearch;
@@ -119,11 +117,11 @@ public class AddDialogController implements Initializable {
                 if(setMovieParameters)
                 {
                     int[] movieParams = getMovieParametersFromChoiceBoxes();
-                    movieToSee = new MovieToSee(imdbMovie, movieParams[0], movieParams[1], movieParams[2], movieParams[3], movieParams[4]);
+                    movieToSee = new MovieToSee(imdbMovie, movieParams[0], movieParams[1], movieParams[2], movieParams[3], movieParams[4], setMovieParameters);
                 }
                 else
                 {
-                    movieToSee = new MovieToSee(imdbMovie);
+                    movieToSee = new MovieToSee(imdbMovie, setMovieParameters);
                 }
                 DatabaseHandling.insertElementIntoDatabase(movieToSee, setMovieParameters);
                 System.out.println(movieToSee.toString());

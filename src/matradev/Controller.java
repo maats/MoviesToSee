@@ -1,6 +1,5 @@
 package matradev;
 
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -33,6 +32,7 @@ import java.util.TreeMap;
  */
 public class Controller implements Initializable{
 
+    @FXML private Button btnSeen;
     @FXML private Label lblDescription;
     @FXML private Label lblGenre;
     @FXML private Label lblImdbRating;
@@ -41,9 +41,7 @@ public class Controller implements Initializable{
     @FXML private Label lblMovieTitle;
     @FXML private Label lblPremiereDate;
     @FXML private Label lblVotesCount;
-    @FXML private Label lblSource;
-    @FXML private Label lblStatus;
-    @FXML private Label lblVersion;
+    @FXML private Label lblToolbar;
     @FXML private ImageView imvPoster;
     @FXML private ImageView imvSource;
     @FXML private ImageView imvVersion;
@@ -91,6 +89,8 @@ public class Controller implements Initializable{
             public void changed(ObservableValue<? extends TableEntry> observable, TableEntry oldValue, TableEntry newValue) {
                 if(tbvMovieListFromDb.getSelectionModel().getSelectedItem() != null)
                 {
+                    lblToolbar.setText(null);
+                    btnSeen.setDisable(false);
                     setMovieInformationsInMainWindow(newValue.getImdbID());
                     System.out.println(newValue.toString());
                 }
@@ -135,18 +135,11 @@ public class Controller implements Initializable{
                 tbcLength.setCellValueFactory(cellData -> cellData.getValue().lengthProperty());
                 tbcGenre.setCellValueFactory(cellData -> cellData.getValue().genreProperty());
                 tbvMovieListFromDb.setItems(getMoviesToSeeAsTableEntries());
-                lblStatus.setText("Pomyślnie załadowano bazę danych online");
+                lblToolbar.setText("Pomyślnie załadowano bazę danych online");
             }
         });
 
     }
-
-/*    public static void processMovieToSeeObjectsToTableEntries(MovieToSee movieToSee)
-    {
-        moviesToSeeAsTableEntries.add(new TableEntry(movieToSee.getImdbMovie().getTitle(), movieToSee.getImdbMovie().getImdbRating(),
-                movieToSee.getImdbMovie().getPremiereDate(), movieToSee.getImdbMovie().getLength(), movieToSee.getImdbMovie().getGenre(),
-                movieToSee.getImdbMovie().getImdbID()));
-    }*/
 
     /**
      * Method sets controls in main window

@@ -125,11 +125,11 @@ public class DatabaseHandling {
                     int resolution = rs.getInt("resolution");
                     int audioSubs = rs.getInt("audio_subs");
 
-                    movieToSee = new MovieToSee(imdbMovie, source, version, container, resolution, audioSubs, seen, movieParameters);
+                    movieToSee = new MovieToSee(imdbMovie, source, version, container, resolution, audioSubs, movieParameters);
                 }
                 else
                 {
-                    movieToSee = new MovieToSee(imdbMovie, seen, movieParameters);
+                    movieToSee = new MovieToSee(imdbMovie, movieParameters);
                 }
 
                 moviesToSee.put(movieToSee.getImdbMovie().getImdbID(), movieToSee);

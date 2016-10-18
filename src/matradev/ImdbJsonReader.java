@@ -69,6 +69,8 @@ public class ImdbJsonReader {
         // Process title from parser and convert to string
         JsonNode titleNode = node.get("Title");
         String title = titleNode.asText();
+        title = title.replaceAll("'", "''");
+        title = title.replaceAll("\"", "\\\"");
         System.out.println("Tytuł: " + title);
 
         // Process IMDb rating from parser and convert to float

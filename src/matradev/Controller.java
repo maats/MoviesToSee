@@ -33,8 +33,6 @@ import java.util.TreeMap;
  */
 public class Controller implements Initializable{
 
-    @FXML private Button btnAdd;
-    @FXML private Button btnDelete;
     @FXML private Label lblDescription;
     @FXML private Label lblGenre;
     @FXML private Label lblImdbRating;
@@ -157,7 +155,7 @@ public class Controller implements Initializable{
     private void setMovieInformationsInMainWindow(String imdbID)
     {
         MovieToSee movieToSee = moviesToSee.get(imdbID);
-        movieToSee.toString();
+        System.out.println(movieToSee.toString());
 
         imvPoster.setImage(new Image(movieToSee.getImdbMovie().getPosterURL()));
         lblMovieTitle.setText(movieToSee.getImdbMovie().getTitle());
@@ -169,7 +167,16 @@ public class Controller implements Initializable{
         lblGenre.setText(movieToSee.getImdbMovie().getGenre());
         lblDescription.setText(movieToSee.getImdbMovie().getDescription());
 
-        setLogotypesOfParameters(movieToSee.getSource(), movieToSee.getVersion(), movieToSee.getContainer(), movieToSee.getResolution(), movieToSee.getAudioSub());
+        if(movieToSee.isMovieParameters())
+        {
+            setLogotypesOfParameters(movieToSee.getSource(), movieToSee.getVersion(), movieToSee.getContainer(), movieToSee.getResolution(), movieToSee.getAudioSub());
+        }
+        // If there aren't movie parameters, method is called with -1 to disable logotypes
+        else
+        {
+            setLogotypesOfParameters(-1, -1, -1, -1, -1);
+        }
+
     }
 
     /**
@@ -186,6 +193,9 @@ public class Controller implements Initializable{
 
         switch (source)
         {
+            case -1:
+                imvSource.setImage(null);
+                break;
             case 0:
                 try {
                     input = new FileInputStream("resources/images/sources/bluray.png");
@@ -230,6 +240,9 @@ public class Controller implements Initializable{
 
         switch (version)
         {
+            case -1:
+                imvVersion.setImage(null);
+                break;
             case 0:
                 try {
                     input = new FileInputStream("resources/images/versions/2d.png");
@@ -250,6 +263,9 @@ public class Controller implements Initializable{
 
         switch (container)
         {
+            case -1:
+                imvContainer.setImage(null);
+                break;
             case 0:
                 try {
                     input = new FileInputStream("resources/images/containers/x264.png");
@@ -278,6 +294,9 @@ public class Controller implements Initializable{
 
         switch (resolution)
         {
+            case -1:
+                imvResolution.setImage(null);
+                break;
             case 0:
                 try {
                     input = new FileInputStream("resources/images/resolutions/2160p.png");
@@ -314,6 +333,10 @@ public class Controller implements Initializable{
 
         switch (audioSub)
         {
+            case -1:
+                imvAudioSub1.setImage(null);
+                imvAudioSub2.setImage(null);
+                break;
             case 0:
                 try {
                     input = new FileInputStream("resources/images/audiosubs/plsub.png");

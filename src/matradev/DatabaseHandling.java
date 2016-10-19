@@ -15,7 +15,6 @@ import java.util.TreeMap;
 public class DatabaseHandling {
 
     private static Connection connection = null;
-    private static Statement statement = null;
     private ObservableList<TableEntry> moviesToSeeAsTableEntries = FXCollections.observableArrayList();
 
     public ObservableList<TableEntry> getMoviesToSeeAsTableEntries() {
@@ -26,14 +25,7 @@ public class DatabaseHandling {
         this.moviesToSeeAsTableEntries = moviesToSeeAsTableEntries;
     }
 
-    public static void main(String[] args) {
-/*        boolean tmp;
-        tmp = connectWithDatabase();
-        String[] strArray = new String[]{"0", "Dzony Rambo", "8.30", "94"};
-        tmp = insertElementIntoDatabase(strArray);*/
-    }
-
-    public static boolean connectWithDatabase()
+    static boolean connectWithDatabase()
     {
         try {
             Class.forName("org.postgresql.Driver");
@@ -50,8 +42,9 @@ public class DatabaseHandling {
         return true;
     }
 
-    public static boolean insertElementIntoDatabase(MovieToSee movieToSee, boolean movieParameters)
+    static boolean insertElementIntoDatabase(MovieToSee movieToSee, boolean movieParameters)
     {
+        Statement statement;
         String sqlCommand;
 
         if(movieParameters)
@@ -92,9 +85,10 @@ public class DatabaseHandling {
         return true;
     }
 
-    public Map<String, MovieToSee> getElementFromDatabase()
+    Map<String, MovieToSee> getElementFromDatabase()
     {
-        MovieToSee movieToSee = null;
+        Statement statement;
+        MovieToSee movieToSee;
         Map<String, MovieToSee> moviesToSee = new TreeMap<>();
 
         try {
@@ -145,6 +139,29 @@ public class DatabaseHandling {
         }
 
         return moviesToSee;
+    }
+
+    /**
+     * Method updates record in database
+     * @param imdbID Unique ID of movie
+     * @param seen Boolean value to check what kind of update to do
+     */
+    static void updateRecordInDatabase(String imdbID, boolean seen)
+    {
+        Statement statement;
+        String sqlCommand;
+
+        if(seen)
+        {
+            sqlCommand = "UPDATE moviestosee SET seen = true WHERE imdb_id = '" + imdbID + "';";
+            try {
+                statement = connection.createStatement();
+                statement.executeUpdate(sqlCommand);
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

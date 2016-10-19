@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="matradev.SettingsDialogController">
+   <children>
+      <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="230.0" prefWidth="360.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab closable="false" text="Baza lokalna">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="319.0" prefWidth="540.0" />
+            </content>
+          </Tab>
+          <Tab closable="false" text="Baza online">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="206.0" prefWidth="360.0">
+                     <children>
+                        <Label layoutX="15.0" layoutY="12.0" text="Adres serwera:" />
+                        <TextField fx:id="txtServerAddress" layoutX="96.0" layoutY="8.0" />
+                        <Label layoutX="15.0" layoutY="43.0" text="Port:" />
+                        <TextField fx:id="txtServerPort" layoutX="96.0" layoutY="39.0" />
+                        <Label layoutX="15.0" layoutY="76.0" text="Login:" />
+                        <TextField fx:id="txtServerLogin" layoutX="96.0" layoutY="72.0" />
+                        <Label layoutX="15.0" layoutY="107.0" text="Hasło:" />
+                        <PasswordField fx:id="pfServerPassword" layoutX="96.0" layoutY="103.0" />
+                        <Label layoutX="15.0" layoutY="140.0" text="Nazwa bazy:" />
+                        <TextField fx:id="txtServerDbName" layoutX="96.0" layoutY="136.0" />
+                        <Button fx:id="btnConnectionTest" layoutX="14.0" layoutY="168.0" mnemonicParsing="false" text="Testuj połączenie" />
+                        <Button fx:id="btnSaveServer" layoutX="129.0" layoutY="168.0" mnemonicParsing="false" text="Zapisz" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+      <ToolBar>
+         <items>
+            <Label fx:id="lblToolbar" />
+         </items>
+      </ToolBar>
+   </children>
+</VBox>

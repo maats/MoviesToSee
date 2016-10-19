@@ -21,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 
@@ -49,6 +50,7 @@ public class Controller implements Initializable{
     @FXML private ImageView imvResolution;
     @FXML private ImageView imvAudioSub1;
     @FXML private ImageView imvAudioSub2;
+    @FXML private Menu menuKindOfWork;
     @FXML private MenuItem miAboutApp;
     @FXML private MenuItem miAdd;
     @FXML private MenuItem miDelete;
@@ -67,6 +69,7 @@ public class Controller implements Initializable{
     private Image poster;
     private ObservableList<TableEntry> moviesToSeeAsTableEntries = FXCollections.observableArrayList();
     private Map<String, MovieToSee> moviesToSee = new TreeMap<String, MovieToSee>();
+    private static String selectedItemInTable;
 
     public ObservableList<TableEntry> getMoviesToSeeAsTableEntries() {
         return moviesToSeeAsTableEntries;
@@ -91,6 +94,7 @@ public class Controller implements Initializable{
                 {
                     lblToolbar.setText(null);
                     btnSeen.setDisable(false);
+                    selectedItemInTable = newValue.getImdbID();
                     setMovieInformationsInMainWindow(newValue.getImdbID());
                     System.out.println(newValue.toString());
                 }
@@ -125,20 +129,61 @@ public class Controller implements Initializable{
                 DatabaseHandling databaseHandling = new DatabaseHandling();
 
                 DatabaseHandling.connectWithDatabase();
+                menuKindOfWork.setText("Status pracy: online");
                 moviesToSee = databaseHandling.getElementFromDatabase();
                 moviesToSeeAsTableEntries = databaseHandling.getMoviesToSeeAsTableEntries();
 
                 // Fills the table
                 tbcMovieTitle.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
                 tbcImdbRating.setCellValueFactory(cellData -> cellData.getValue().imdbRatingProperty());
+                tbcImdbRating.setStyle("-fx-alignment: CENTER;");
+                tbcImdbRating.setSortType(TableColumn.SortType.DESCENDING); // Sort by IMDb rating
                 tbcPremiereDate.setCellValueFactory(cellData -> cellData.getValue().premiereDateProperty());
+                tbcPremiereDate.setStyle("-fx-alignment: CENTER-RIGHT;");
                 tbcLength.setCellValueFactory(cellData -> cellData.getValue().lengthProperty());
+                tbcLength.setStyle("-fx-alignment: CENTER;");
                 tbcGenre.setCellValueFactory(cellData -> cellData.getValue().genreProperty());
                 tbvMovieListFromDb.setItems(getMoviesToSeeAsTableEntries());
+                tbvMovieListFromDb.getSortOrder().add(tbcImdbRating); // Sort by IMDb rating
+
                 lblToolbar.setText("Pomyślnie załadowano bazę danych online");
             }
         });
 
+        /**
+         * Load informations from internal database (local file)
+         * TODO: Handling
+         */
+        miLoadLocalDb.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                menuKindOfWork.setText("Status pracy: offline");
+            }
+        });
+
+        btnSeen.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                // Show alert window with question about setting movie parameters
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Potwierdzenie akcji");
+                alert.setHeaderText("Czy na pewno chcesz oznaczyć film jako obejrzany?");
+
+                ButtonType buttonTypeYes = new ButtonType("Tak", ButtonBar.ButtonData.OK_DONE);
+                ButtonType buttonTypeNo = new ButtonType("Nie", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+                alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == buttonTypeYes){
+                    DatabaseHandling.connectWithDatabase();
+                    DatabaseHandling.updateRecordInDatabase(selectedItemInTable, true);
+                    lblToolbar.setText("Film został oznaczony jako obejrzany");
+                    btnSeen.setDisable(true);
+                }
+            }
+        });
     }
 
     /**
@@ -378,6 +423,12 @@ public class Controller implements Initializable{
                 }
                 break;
         }
+    }
+
+
+    private void setMovieAsSeen()
+    {
+
     }
 
 /*    public static void saveMovieToMap(MovieToSee movieToSee)

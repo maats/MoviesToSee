@@ -36,6 +36,7 @@
             <MenuItem fx:id="miAboutApp" mnemonicParsing="false" text="O aplikacji" />
           </items>
         </Menu>
+            <Menu fx:id="menuKindOfWork" disable="true" mnemonicParsing="false" />
       </menus>
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
@@ -215,13 +216,13 @@
                   </VBox>
                   <VBox fillWidth="false" GridPane.columnSpan="4" GridPane.rowIndex="2">
                      <children>
-                        <TableView fx:id="tbvMovieListFromDb" prefHeight="200.0">
+                        <TableView fx:id="tbvMovieListFromDb" prefHeight="200.0" prefWidth="660.0">
                           <columns>
-                            <TableColumn fx:id="tbcMovieTitle" maxWidth="-Infinity" minWidth="200.0" prefWidth="200.0" resizable="false" text="Tytuł filmu" />
-                            <TableColumn fx:id="tbcImdbRating" maxWidth="-Infinity" minWidth="45.0" prefWidth="45.0" resizable="false" text="Ocena" />
-                              <TableColumn fx:id="tbcPremiereDate" maxWidth="-Infinity" minWidth="90.0" prefWidth="90.0" resizable="false" text="Data premiery" />
-                              <TableColumn fx:id="tbcLength" maxWidth="-Infinity" minWidth="75.0" prefWidth="75.0" resizable="false" text="Czas trwania" />
-                              <TableColumn fx:id="tbcGenre" maxWidth="-Infinity" minWidth="250.0" prefWidth="250.0" resizable="false" text="Gatunek" />
+                            <TableColumn fx:id="tbcMovieTitle" maxWidth="-Infinity" minWidth="175.0" prefWidth="175.0" resizable="false" text="Tytuł filmu" />
+                            <TableColumn fx:id="tbcImdbRating" maxWidth="-Infinity" minWidth="55.0" prefWidth="55.0" resizable="false" sortType="DESCENDING" text="Ocena" />
+                              <TableColumn fx:id="tbcPremiereDate" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Data premiery" />
+                              <TableColumn fx:id="tbcLength" maxWidth="-Infinity" minWidth="90.0" prefWidth="90.0" resizable="false" text="Czas trwania" />
+                              <TableColumn fx:id="tbcGenre" maxWidth="-Infinity" minWidth="225.0" prefWidth="225.0" resizable="false" text="Gatunek" />
                           </columns>
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -231,7 +232,7 @@
                   </VBox>
                   <VBox alignment="CENTER" GridPane.rowIndex="1">
                      <children>
-                        <Button fx:id="btnSeen" disable="true" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Dodaj do obejrzanych" />
+                        <Button fx:id="btnSeen" disable="true" mnemonicParsing="false" prefHeight="30.0" text="Oznacz jako obejrzany" />
                      </children>
                   </VBox>
                   <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">

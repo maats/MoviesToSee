@@ -1,7 +1,5 @@
 package matradev;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -68,98 +66,83 @@ public class AddDialogController implements Initializable {
         imvPoster.setImage(poster);
         loadMovieParametersToChoiceBoxes();
 
-        btnSearch.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                String movieId = txtMovieId.getText();
-                String movieTitle = txtMovieTitle.getText();
-                String movieYear = txtMovieYear.getText();
-                ImdbJsonReader imdbJsonReader = new ImdbJsonReader();
+        btnSearch.setOnAction(event -> {
+            String movieId = txtMovieId.getText();
+            String movieTitle = txtMovieTitle.getText();
+            String movieYear = txtMovieYear.getText();
+            ImdbJsonReader imdbJsonReader = new ImdbJsonReader();
 
-                // TODO: Check if IMDb ID is entered in valid format (tt1234567)
-                if(movieId.length() != 0)
-                {
-                    imdbJsonReader.parseImdbId(movieId);
-                    imdbJsonReader.processParsedData();
-                    imdbMovie = imdbJsonReader.getMovie();
-                }
-                else if(movieTitle.length() != 0)
-                {
-                    imdbJsonReader.parseImdbByMovieTitleAndYear(movieTitle, movieYear);
-                    imdbJsonReader.processParsedData();
-                    imdbMovie = imdbJsonReader.getMovie();
-                }
+            // TODO: Check if IMDb ID is entered in valid format (tt1234567)
+            if(movieId.length() != 0)
+            {
+                imdbJsonReader.parseImdbId(movieId);
+                imdbJsonReader.processParsedData();
+                imdbMovie = imdbJsonReader.getMovie();
+            }
+            else if(movieTitle.length() != 0)
+            {
+                imdbJsonReader.parseImdbByMovieTitleAndYear(movieTitle, movieYear);
+                imdbJsonReader.processParsedData();
+                imdbMovie = imdbJsonReader.getMovie();
+            }
 
-                if(imdbMovie != null)
-                {
-                    lblTitle.setText(imdbMovie.getTitle());
-                    lblPremiereDate.setText(imdbMovie.getPremiereDate());
-                    lblGenre.setText(imdbMovie.getGenre());
-                    imvPoster.setImage(new Image(imdbMovie.getPosterURL()));
-                    lblCheckSearchResult.setVisible(true);
-                    vboxSearchResult.setDisable(false);
-                    lblCheckSearchResult.setDisable(false);
-
-                }
-                else
-                {
-                    System.out.println("Nie podano argumentu");
-                }
+            if(imdbMovie != null)
+            {
+                lblTitle.setText(imdbMovie.getTitle());
+                lblPremiereDate.setText(imdbMovie.getPremiereDate());
+                lblGenre.setText(imdbMovie.getGenre());
+                imvPoster.setImage(new Image(imdbMovie.getPosterURL()));
+                lblCheckSearchResult.setVisible(true);
+                vboxSearchResult.setDisable(false);
+                lblCheckSearchResult.setDisable(false);
+            }
+            else
+            {
+                System.out.println("Nie podano argumentu");
             }
         });
 
-        btnSaveInDb.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
+        btnSaveInDb.setOnAction(event -> {
 
-                DatabaseHandling.connectWithDatabase();
-                // Check if user chose setting up movie parameters
-                if(setMovieParameters)
-                {
-                    int[] movieParams = getMovieParametersFromChoiceBoxes();
-                    movieToSee = new MovieToSee(imdbMovie, movieParams[0], movieParams[1], movieParams[2], movieParams[3], movieParams[4], setMovieParameters);
-                }
-                else
-                {
-                    movieToSee = new MovieToSee(imdbMovie, setMovieParameters);
-                }
-                DatabaseHandling.insertElementIntoDatabase(movieToSee, setMovieParameters);
-                System.out.println(movieToSee.toString());
-
+            DatabaseHandling.connectWithDatabase();
+            // Check if user chose setting up movie parameters
+            if(setMovieParameters)
+            {
+                int[] movieParams = getMovieParametersFromChoiceBoxes();
+                movieToSee = new MovieToSee(imdbMovie, movieParams[0], movieParams[1], movieParams[2], movieParams[3], movieParams[4], setMovieParameters);
             }
+            else
+            {
+                movieToSee = new MovieToSee(imdbMovie, setMovieParameters);
+            }
+            DatabaseHandling.insertElementIntoDatabase(movieToSee, setMovieParameters);
+            System.out.println(movieToSee.toString());
+
         });
 
-        btnAddMovieToSee.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
+        btnAddMovieToSee.setOnAction(event -> {
 
-                // Show alert window with question about setting movie parameters
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Potwierdzenie ustawienia parametrów filmu");
-                alert.setHeaderText("Czy chcesz ustawić parametry filmu?");
+            // Show alert window with question about setting movie parameters
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Potwierdzenie ustawienia parametrów filmu");
+            alert.setHeaderText("Czy chcesz ustawić parametry filmu?");
 
-                ButtonType buttonTypeYes = new ButtonType("Tak", ButtonBar.ButtonData.OK_DONE);
-                ButtonType buttonTypeNo = new ButtonType("Nie", ButtonBar.ButtonData.CANCEL_CLOSE);
+            ButtonType buttonTypeYes = new ButtonType("Tak", ButtonBar.ButtonData.OK_DONE);
+            ButtonType buttonTypeNo = new ButtonType("Nie", ButtonBar.ButtonData.CANCEL_CLOSE);
 
-                alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+            alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
 
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == buttonTypeYes){
-                    setMovieParameters = true;
-                    vboxMovieParameters.setDisable(false); // Enable VBox with choicebox controls
-                } else {
-                    setMovieParameters = false;
-                }
-                vboxSaveButtons.setDisable(false); // Enable VBox with save buttons
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == buttonTypeYes){
+                setMovieParameters = true;
+                vboxMovieParameters.setDisable(false); // Enable VBox with choicebox controls
+            } else {
+                setMovieParameters = false;
             }
+            vboxSaveButtons.setDisable(false); // Enable VBox with save buttons
         });
 
-        btnWrongMovieFound.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                lblPreciseMoreYourSearch.setVisible(true);
-            }
-        });
+        btnWrongMovieFound.setOnAction(event -> lblPreciseMoreYourSearch.setVisible(true));
     }
 
     public int[] getMovieParametersFromChoiceBoxes()

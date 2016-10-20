@@ -5,7 +5,14 @@
 <?import javafx.scene.layout.*?>
 
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="matradev.SettingsDialogController">
+<GridPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="matradev.SettingsDialogController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints vgrow="SOMETIMES" />
+    <RowConstraints vgrow="SOMETIMES" />
+  </rowConstraints>
    <children>
       <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="230.0" prefWidth="360.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -36,10 +43,10 @@
           </Tab>
         </tabs>
       </TabPane>
-      <ToolBar>
+      <ToolBar GridPane.rowIndex="1">
          <items>
             <Label fx:id="lblToolbar" />
          </items>
       </ToolBar>
    </children>
-</VBox>
+</GridPane>

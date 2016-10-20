@@ -1,12 +1,13 @@
 package matradev;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.TreeMap;
 
 /**
  * Created by Mateusz on 05.10.2016.
  */
-public class MovieToSee {
+public class MovieToSee implements Serializable {
 
     private ImdbMovie imdbMovie;
     private int source;

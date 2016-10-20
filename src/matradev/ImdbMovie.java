@@ -1,9 +1,11 @@
 package matradev;
 
+import java.io.Serializable;
+
 /**
  * Created by Mateusz on 03.10.2016.
  */
-public class ImdbMovie {
+public class ImdbMovie implements Serializable {
 
     private String title;
     private float imdbRating;

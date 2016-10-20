@@ -122,6 +122,12 @@ public class Controller implements Initializable{
             }
         });
 
+        miModify.setOnAction(event ->
+        {
+            LocalDatabase localDatabase = new LocalDatabase();
+            localDatabase.addToDb(moviesToSee);
+        });
+
         /**
          * Load informations from external (SQL) database
          * TODO: Improve sorting by premiere date

@@ -42,6 +42,26 @@ public class DatabaseHandling {
         return true;
     }
 
+    boolean testConnectionWithDatabase(String serverAddress, String serverPort, String serverDbName, String serverLogin, String serverPassword)
+    {
+
+        String connectionString = "jdbc:postgresql://" + serverAddress + ":" + serverPort + "/" + serverDbName;
+        try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.
+                    getConnection(connectionString, serverLogin, serverPassword);
+            System.out.println(connection.isValid(3));
+        } catch (SQLException e) {
+            System.out.println(e.getClass().getName() + ": " + e.getMessage());
+            return false;
+        } catch (ClassNotFoundException e) {
+            System.out.println("Nie odnaleziono klasy Driver kontrolera PostgreSQL!");
+            return false;
+        }
+        System.out.println("Connection successful");
+        return true;
+    }
+
     static boolean insertElementIntoDatabase(MovieToSee movieToSee, boolean movieParameters)
     {
         Statement statement;

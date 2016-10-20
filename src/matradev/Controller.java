@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
@@ -109,6 +110,8 @@ public class Controller implements Initializable{
                 try {
                     root = FXMLLoader.load(getClass().getClassLoader().getResource("matradev/AddDialog.fxml"), resources);
                     Stage stage = new Stage();
+                    stage.initModality(Modality.WINDOW_MODAL); // Parent stage is unavailable when child is opened
+                    stage.initOwner(Main.primaryStage); // Parent stage is unavailable when child is opened
                     stage.setTitle("Wyszukaj film");
                     stage.setScene(new Scene(root));
                     stage.setResizable(false);
@@ -123,65 +126,73 @@ public class Controller implements Initializable{
          * Load informations from external (SQL) database
          * TODO: Improve sorting by premiere date
          */
-        miLoadExternalDb.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DatabaseHandling databaseHandling = new DatabaseHandling();
+        miLoadExternalDb.setOnAction(event -> {
+            DatabaseHandling databaseHandling = new DatabaseHandling();
 
-                DatabaseHandling.connectWithDatabase();
-                menuKindOfWork.setText("Status pracy: online");
-                moviesToSee = databaseHandling.getElementFromDatabase();
-                moviesToSeeAsTableEntries = databaseHandling.getMoviesToSeeAsTableEntries();
+            DatabaseHandling.connectWithDatabase();
+            menuKindOfWork.setText("Status pracy: online");
+            moviesToSee = databaseHandling.getElementFromDatabase();
+            moviesToSeeAsTableEntries = databaseHandling.getMoviesToSeeAsTableEntries();
 
-                // Fills the table
-                tbcMovieTitle.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
-                tbcImdbRating.setCellValueFactory(cellData -> cellData.getValue().imdbRatingProperty());
-                tbcImdbRating.setStyle("-fx-alignment: CENTER;");
-                tbcImdbRating.setSortType(TableColumn.SortType.DESCENDING); // Sort by IMDb rating
-                tbcPremiereDate.setCellValueFactory(cellData -> cellData.getValue().premiereDateProperty());
-                tbcPremiereDate.setStyle("-fx-alignment: CENTER-RIGHT;");
-                tbcLength.setCellValueFactory(cellData -> cellData.getValue().lengthProperty());
-                tbcLength.setStyle("-fx-alignment: CENTER;");
-                tbcGenre.setCellValueFactory(cellData -> cellData.getValue().genreProperty());
-                tbvMovieListFromDb.setItems(getMoviesToSeeAsTableEntries());
-                tbvMovieListFromDb.getSortOrder().add(tbcImdbRating); // Sort by IMDb rating
+            // Fills the table
+            tbcMovieTitle.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
+            tbcImdbRating.setCellValueFactory(cellData -> cellData.getValue().imdbRatingProperty());
+            tbcImdbRating.setStyle("-fx-alignment: CENTER;");
+            tbcImdbRating.setSortType(TableColumn.SortType.DESCENDING); // Sort by IMDb rating
+            tbcPremiereDate.setCellValueFactory(cellData -> cellData.getValue().premiereDateProperty());
+            tbcPremiereDate.setStyle("-fx-alignment: CENTER-RIGHT;");
+            tbcLength.setCellValueFactory(cellData -> cellData.getValue().lengthProperty());
+            tbcLength.setStyle("-fx-alignment: CENTER;");
+            tbcGenre.setCellValueFactory(cellData -> cellData.getValue().genreProperty());
+            tbvMovieListFromDb.setItems(getMoviesToSeeAsTableEntries());
+            tbvMovieListFromDb.getSortOrder().add(tbcImdbRating); // Sort by IMDb rating
 
-                lblToolbar.setText("Pomyślnie załadowano bazę danych online");
-            }
+            lblToolbar.setText("Pomyślnie załadowano bazę danych online");
         });
 
         /**
          * Load informations from internal database (local file)
          * TODO: Handling
          */
-        miLoadLocalDb.setOnAction(new EventHandler<ActionEvent>() {
+        miLoadLocalDb.setOnAction(event -> menuKindOfWork.setText("Status pracy: offline"));
+
+        miSettings.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                menuKindOfWork.setText("Status pracy: offline");
+                Parent root;
+                try {
+                    root = FXMLLoader.load(getClass().getClassLoader().getResource("matradev/SettingsDialog.fxml"), resources);
+                    Stage stage = new Stage();
+                    stage.initModality(Modality.WINDOW_MODAL); // Parent stage is unavailable when child is opened
+                    stage.initOwner(Main.primaryStage); // Parent stage is unavailable when child is opened
+                    stage.setTitle("Ustawienia");
+                    stage.setScene(new Scene(root));
+                    stage.setResizable(false);
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
-        btnSeen.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
+        btnSeen.setOnAction(event -> {
 
-                // Show alert window with question about setting movie parameters
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Potwierdzenie akcji");
-                alert.setHeaderText("Czy na pewno chcesz oznaczyć film jako obejrzany?");
+            // Show alert window with question about setting movie parameters
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Potwierdzenie akcji");
+            alert.setHeaderText("Czy na pewno chcesz oznaczyć film jako obejrzany?");
 
-                ButtonType buttonTypeYes = new ButtonType("Tak", ButtonBar.ButtonData.OK_DONE);
-                ButtonType buttonTypeNo = new ButtonType("Nie", ButtonBar.ButtonData.CANCEL_CLOSE);
+            ButtonType buttonTypeYes = new ButtonType("Tak", ButtonBar.ButtonData.OK_DONE);
+            ButtonType buttonTypeNo = new ButtonType("Nie", ButtonBar.ButtonData.CANCEL_CLOSE);
 
-                alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+            alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
 
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == buttonTypeYes){
-                    DatabaseHandling.connectWithDatabase();
-                    DatabaseHandling.updateRecordInDatabase(selectedItemInTable, true);
-                    lblToolbar.setText("Film został oznaczony jako obejrzany");
-                    btnSeen.setDisable(true);
-                }
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == buttonTypeYes){
+                DatabaseHandling.connectWithDatabase();
+                DatabaseHandling.updateRecordInDatabase(selectedItemInTable, true);
+                lblToolbar.setText("Film został oznaczony jako obejrzany");
+                btnSeen.setDisable(true);
             }
         });
     }

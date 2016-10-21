@@ -16,6 +16,8 @@
       <menus>
         <Menu mnemonicParsing="false" text="Plik">
           <items>
+                  <MenuItem fx:id="miCreateLocalDatabase" mnemonicParsing="false" text="Nowa baza lokalna" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem fx:id="miLoadLocalDb" mnemonicParsing="false" text="Wczytaj bazę lokalną" />
             <MenuItem fx:id="miLoadExternalDb" mnemonicParsing="false" text="Wczytaj bazę online" />
             <SeparatorMenuItem mnemonicParsing="false" />

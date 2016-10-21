@@ -13,6 +13,8 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     public static Stage primaryStage;
+    public static final String APP_NAME = "MoviesToSee";
+    public static final String APP_VERSION = "0.4a";
 
     public static void main(String[] args) {
         launch(args);
@@ -27,7 +29,7 @@ public class Main extends Application {
         Parent root = loader.load(getClass().getResource("BasicApplication_css.fxml"));
 
         Scene scene = new Scene(root);
-        primaryStage.setTitle("MovieToSee");
+        primaryStage.setTitle(APP_NAME + " " + APP_VERSION);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

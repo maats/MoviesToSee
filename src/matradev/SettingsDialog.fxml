@@ -4,26 +4,30 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <GridPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="matradev.SettingsDialogController">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" />
+    <ColumnConstraints />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints vgrow="SOMETIMES" />
-    <RowConstraints vgrow="SOMETIMES" />
+    <RowConstraints />
+    <RowConstraints />
   </rowConstraints>
    <children>
-      <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="230.0" prefWidth="360.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="230.0" prefWidth="340.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab closable="false" text="Baza lokalna">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="319.0" prefWidth="540.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="320.0" prefWidth="540.0">
+                     <children>
+                        <TextField fx:id="txtChosenFile" editable="false" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="250.0" />
+                        <Button fx:id="btnOpenFileChooser" layoutX="271.0" layoutY="14.0" mnemonicParsing="false" text="Otwórz" />
+                        <Button fx:id="btnOpenFileChooser1" layoutX="276.0" layoutY="168.0" mnemonicParsing="false" text="Zapisz" />
+                     </children></AnchorPane>
             </content>
           </Tab>
           <Tab closable="false" text="Baza online">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="206.0" prefWidth="360.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="340.0">
                      <children>
                         <Label layoutX="15.0" layoutY="12.0" text="Adres serwera:" />
                         <TextField fx:id="txtServerAddress" layoutX="96.0" layoutY="8.0" />
@@ -35,8 +39,8 @@
                         <PasswordField fx:id="pfServerPassword" layoutX="96.0" layoutY="103.0" />
                         <Label layoutX="15.0" layoutY="140.0" text="Nazwa bazy:" />
                         <TextField fx:id="txtServerDbName" layoutX="96.0" layoutY="136.0" />
-                        <Button fx:id="btnConnectionTest" layoutX="14.0" layoutY="168.0" mnemonicParsing="false" text="Testuj połączenie" />
-                        <Button fx:id="btnSaveServer" layoutX="129.0" layoutY="168.0" mnemonicParsing="false" text="Zapisz" />
+                        <Button fx:id="btnConnectionTest" layoutX="161.0" layoutY="168.0" mnemonicParsing="false" text="Testuj połączenie" />
+                        <Button fx:id="btnSaveServer" layoutX="276.0" layoutY="168.0" mnemonicParsing="false" text="Zapisz" />
                      </children>
                   </AnchorPane>
             </content>

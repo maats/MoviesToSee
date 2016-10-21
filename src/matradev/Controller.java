@@ -14,9 +14,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -54,6 +56,7 @@ public class Controller implements Initializable{
     @FXML private Menu menuKindOfWork;
     @FXML private MenuItem miAboutApp;
     @FXML private MenuItem miAdd;
+    @FXML private MenuItem miCreateLocalDatabase;
     @FXML private MenuItem miDelete;
     @FXML private MenuItem miExit;
     @FXML private MenuItem miLoadExternalDb;
@@ -71,9 +74,15 @@ public class Controller implements Initializable{
     private ObservableList<TableEntry> moviesToSeeAsTableEntries = FXCollections.observableArrayList();
     private Map<String, MovieToSee> moviesToSee = new TreeMap<String, MovieToSee>();
     private static String selectedItemInTable;
+    private static String localDatabasePath;
+    final FileChooser fileChooser = new FileChooser();
 
     public ObservableList<TableEntry> getMoviesToSeeAsTableEntries() {
         return moviesToSeeAsTableEntries;
+    }
+
+    public static void setLocalDatabasePath(String localDatabasePath) {
+        Controller.localDatabasePath = localDatabasePath;
     }
 
     @Override
@@ -154,6 +163,24 @@ public class Controller implements Initializable{
             tbvMovieListFromDb.getSortOrder().add(tbcImdbRating); // Sort by IMDb rating
 
             lblToolbar.setText("Pomyślnie załadowano bazę danych online");
+        });
+
+        miCreateLocalDatabase.setOnAction(event -> {
+            Stage stage = new Stage();
+            fileChooser.setTitle("Nowa baza filmów do obejrzenia");
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.home"))); // Sets initial directory in FileChooser
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("DBW (.dbw)", "*.dbw")); // Sets available extension of file
+            File file = fileChooser.showSaveDialog(stage);
+
+            Main.primaryStage.setTitle(Main.APP_NAME + " " + Main.APP_VERSION + " [ db: " + file.getName() + " ]");
+
+            if (file != null) {
+                LocalDatabase.setDbFilePath(file.getPath());
+                LocalDatabase.setDbFileName(file.getName());
+                LocalDatabase.createDatabaseFile();
+            }
+
+
         });
 
         /**

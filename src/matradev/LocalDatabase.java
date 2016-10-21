@@ -13,9 +13,36 @@ public class LocalDatabase {
     private static MovieToSee movieToSee;
     private static ArrayList<MovieToSee> movies = new ArrayList<>();
     private static String fileName = "dbLocal.stm";
+    private static String dbFilePath;
+    private static String dbFileName;
     //private static File file = new File(fileName);
 
     public static void main(String[] args) {
+
+    }
+
+    public static void setDbFilePath(String dbFilePath) {
+        LocalDatabase.dbFilePath = dbFilePath;
+    }
+
+    public static void setDbFileName(String dbFileName) {
+        LocalDatabase.dbFileName = dbFileName;
+    }
+
+    static void createDatabaseFile()
+    {
+        FileOutputStream fos;
+        ObjectOutputStream oos = null;
+
+        try {
+            fos = new FileOutputStream(dbFilePath);
+            oos = new ObjectOutputStream(fos);
+            oos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

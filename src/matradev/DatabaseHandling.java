@@ -184,4 +184,23 @@ public class DatabaseHandling {
         }
     }
 
+    /**
+     * Method deletes record from database
+     * @param imdbID Unique ID of movie
+     */
+    static void deleteRecordFromDatabase(String imdbID)
+    {
+        Statement statement;
+        String sqlCommand;
+
+        sqlCommand = "DELETE from moviestosee WHERE imdb_id = '" + imdbID + "';";
+        try {
+            statement = connection.createStatement();
+            statement.executeUpdate(sqlCommand);
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

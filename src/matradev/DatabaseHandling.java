@@ -187,8 +187,9 @@ public class DatabaseHandling {
     /**
      * Method deletes record from database
      * @param imdbID Unique ID of movie
+     * @return True - if everything went fine, otherwise false
      */
-    static void deleteRecordFromDatabase(String imdbID)
+    static boolean deleteRecordFromDatabase(String imdbID)
     {
         Statement statement;
         String sqlCommand;
@@ -198,8 +199,10 @@ public class DatabaseHandling {
             statement = connection.createStatement();
             statement.executeUpdate(sqlCommand);
             statement.close();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
 

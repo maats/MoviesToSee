@@ -26,7 +26,7 @@
             <MenuItem fx:id="miExit" mnemonicParsing="false" text="Wyjście" />
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="Film">
+        <Menu fx:id="menuMovie" disable="true" mnemonicParsing="false" text="Film">
           <items>
             <MenuItem fx:id="miAdd" mnemonicParsing="false" text="Dodaj" />
             <MenuItem fx:id="miModify" mnemonicParsing="false" text="Modyfikuj" />

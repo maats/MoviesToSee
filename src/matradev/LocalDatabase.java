@@ -3,6 +3,7 @@ package matradev;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Local database
@@ -12,27 +13,26 @@ public class LocalDatabase {
 
     private static MovieToSee movieToSee;
     private static ArrayList<MovieToSee> movies = new ArrayList<>();
-    private static String fileName = "dbLocal.stm";
     private static String dbFilePath;
     private static String dbFileName;
-    //private static File file = new File(fileName);
+    private static Map<String, MovieToSee> moviesToSee = new TreeMap<>();
 
-    public static void main(String[] args) {
-
-    }
-
-    public static void setDbFilePath(String dbFilePath) {
+    public void setDbFilePath(String dbFilePath) {
         LocalDatabase.dbFilePath = dbFilePath;
     }
 
-    public static void setDbFileName(String dbFileName) {
+    public void setDbFileName(String dbFileName) {
         LocalDatabase.dbFileName = dbFileName;
     }
 
-    static void createDatabaseFile()
+    public static Map<String, MovieToSee> getMoviesToSee() {
+        return moviesToSee;
+    }
+
+    void createDatabaseFile()
     {
         FileOutputStream fos;
-        ObjectOutputStream oos = null;
+        ObjectOutputStream oos;
 
         try {
             fos = new FileOutputStream(dbFilePath);
@@ -43,18 +43,15 @@ public class LocalDatabase {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
-    void addToDb(Map<String, MovieToSee> moviesToSee)
+    static void saveMoviesDatabase(Map<String, MovieToSee> moviesToSee)
     {
         FileOutputStream fos;
-        ObjectOutputStream oos = null;
-        FileInputStream fis;
-        ObjectInputStream ois;
+        ObjectOutputStream oos;
 
         try {
-            fos = new FileOutputStream(fileName);
+            fos = new FileOutputStream(dbFilePath);
             oos = new ObjectOutputStream(fos);
             oos.writeObject(moviesToSee);
             oos.close();
@@ -63,5 +60,35 @@ public class LocalDatabase {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    static void addMovieToLocalDatabase(MovieToSee movieToSee)
+    {
+        moviesToSee.put(movieToSee.getImdbMovie().getImdbID(), movieToSee);
+    }
+
+    Map<String, MovieToSee> loadMoviesDatabase()
+    {
+        FileInputStream fis;
+        ObjectInputStream ois;
+        File file = new File(dbFilePath);
+
+        if(file.exists())
+        {
+            try {
+                fis = new FileInputStream(dbFilePath);
+                ois = new ObjectInputStream(fis);
+                moviesToSee = (Map) ois.readObject();
+                ois.close();
+                fis.close();
+            } catch (FileNotFoundException e) {
+                System.out.println("Load: Nie odnaleziono pliku podczas ładowania");
+            } catch (IOException e) {
+                System.out.println("Load: Wyjątek IO");
+            } catch (ClassNotFoundException e) {
+                System.out.println("Load: Klasa nie odnaleziona");
+            }
+        }
+        return moviesToSee;
     }
 }

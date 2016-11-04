@@ -9,7 +9,6 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="matradev.AddDialogController">
    <children>
       <GridPane hgap="5.0" vgap="5.0">
@@ -250,12 +249,7 @@
                <children>
                   <HBox alignment="CENTER">
                      <children>
-                        <Button fx:id="btnSaveLocal" mnemonicParsing="false" text="Zapisz lokalnie">
-                           <HBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </HBox.margin>
-                        </Button>
-                        <Button fx:id="btnSaveInDb" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Zapisz w bazie danych online">
+                        <Button fx:id="btnSave" mnemonicParsing="false" text="Zapisz pozycję w bazie danych">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>

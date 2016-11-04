@@ -45,13 +45,13 @@ public class AddDialogController implements Initializable {
     @FXML private VBox vboxSaveButtons;
 
     private Image poster;
-    ImdbMovie imdbMovie = null;
+    private ImdbMovie imdbMovie = null;
     private MovieToSee movieToSee = new MovieToSee();
-    static Map<Integer, String> mapAudioSubtitles;
-    static Map<Integer, String> mapContainers;
-    static Map<Integer, String> mapResolutions;
-    static Map<Integer, String> mapSources;
-    static Map<Integer, String> mapVersions;
+    private static Map<Integer, String> mapAudioSubtitles;
+    private static Map<Integer, String> mapContainers;
+    private static Map<Integer, String> mapResolutions;
+    private static Map<Integer, String> mapSources;
+    private static Map<Integer, String> mapVersions;
     private boolean setMovieParameters;
 
     @Override
@@ -146,7 +146,7 @@ public class AddDialogController implements Initializable {
         btnWrongMovieFound.setOnAction(event -> lblPreciseMoreYourSearch.setVisible(true));
     }
 
-    public int[] getMovieParametersFromChoiceBoxes()
+    private int[] getMovieParametersFromChoiceBoxes()
     {
         int[] movieParams = new int[5];
 
@@ -184,14 +184,14 @@ public class AddDialogController implements Initializable {
         return movieParams;
     }
 
-    public void loadMovieParametersToChoiceBoxes()
+    private void loadMovieParametersToChoiceBoxes()
     {
         // Processing maps
-        mapAudioSubtitles = movieToSee.getAudioSubs();
-        mapContainers = movieToSee.getContainers();
-        mapResolutions = movieToSee.getResolutions();
-        mapSources = movieToSee.getSources();
-        mapVersions = movieToSee.getVersions();
+        mapAudioSubtitles = MovieToSee.getAudioSubs();
+        mapContainers = MovieToSee.getContainers();
+        mapResolutions = MovieToSee.getResolutions();
+        mapSources = MovieToSee.getSources();
+        mapVersions = MovieToSee.getVersions();
 
         for (Integer key :
                 mapAudioSubtitles.keySet()) {
@@ -224,14 +224,14 @@ public class AddDialogController implements Initializable {
         cebVersion.getSelectionModel().selectFirst();
     }
 
-    public void saveMovieInLocalDatabaseFile()
+    private void saveMovieInLocalDatabaseFile()
     {
-        LocalDatabase.addMovieToLocalDatabase(movieToSee, setMovieParameters);
+        LocalDatabase.addMovieToLocalDatabase(movieToSee);
         LocalDatabase.saveMoviesDatabase(LocalDatabase.getMoviesToSee());
         System.out.println(movieToSee.toString());
     }
 
-    public void saveMovieInExternalDatabase()
+    private void saveMovieInExternalDatabase()
     {
         DatabaseHandling.connectWithDatabase();
         DatabaseHandling.insertElementIntoDatabase(movieToSee, setMovieParameters);

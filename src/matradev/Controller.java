@@ -11,7 +11,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -76,16 +75,12 @@ public class Controller implements Initializable{
     private ObservableList<TableEntry> moviesToSeeAsTableEntries = FXCollections.observableArrayList();
     private Map<String, MovieToSee> moviesToSee = new TreeMap<String, MovieToSee>();
     private static String selectedItemInTable;
-    private static String localDatabasePath;
-    final FileChooser fileChooser = new FileChooser();
+    private final FileChooser fileChooser = new FileChooser();
+    private LocalDatabase localDatabase;
     private static boolean isAppWorksOnline;
 
     public ObservableList<TableEntry> getMoviesToSeeAsTableEntries() {
         return moviesToSeeAsTableEntries;
-    }
-
-    public static void setLocalDatabasePath(String localDatabasePath) {
-        Controller.localDatabasePath = localDatabasePath;
     }
 
     public static boolean isAppWorksOnline() {
@@ -105,12 +100,12 @@ public class Controller implements Initializable{
 
         /**
          * MenuItem: File > Create new local database
-         * Creates file in selected by user directory with database
+         * Creates file with database in selected by user directory
          */
         miCreateLocalDatabase.setOnAction(event -> {
             Stage stage = new Stage();
             fileChooser.setTitle("Nowa baza filmów do obejrzenia");
-            fileChooser.setInitialDirectory(new File(System.getProperty("user.home"))); // Sets initial directory in FileChooser
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.home"), "Desktop")); // Sets initial directory in FileChooser
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("DBW (.dbw)", "*.dbw")); // Sets available extension of file
             File file = fileChooser.showSaveDialog(stage);
 
@@ -119,21 +114,37 @@ public class Controller implements Initializable{
                 isAppWorksOnline = false;
                 menuMovie.setDisable(false);
                 Main.primaryStage.setTitle(Main.APP_NAME + " " + Main.APP_VERSION + " [ db: " + file.getName() + " ]");
-                LocalDatabase.setDbFilePath(file.getPath());
-                LocalDatabase.setDbFileName(file.getName());
-                LocalDatabase.createDatabaseFile();
+                localDatabase = new LocalDatabase();
+                localDatabase.setDbFilePath(file.getPath());
+                localDatabase.setDbFileName(file.getName());
+                localDatabase.createDatabaseFile();
             }
         });
 
         /**
          * MenuItem: File > Load local database
          * Load informations from internal database (local file)
-         * TODO: Handling
          */
         miLoadLocalDb.setOnAction(event -> {
-            menuKindOfWork.setText("Status pracy: offline");
-            isAppWorksOnline = false;
-            menuMovie.setDisable(false);
+
+            Stage stage = new Stage();
+            fileChooser.setTitle("Wybierz plik z bazą filmów do obejrzenia");
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.home"), "Desktop")); // Sets initial directory in FileChooser
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("DBW (.dbw)", "*.dbw")); // Sets available extension of file
+            File file = fileChooser.showOpenDialog(stage);
+
+            if (file != null) {
+                menuKindOfWork.setText("Status pracy: offline");
+                isAppWorksOnline = false;
+                menuMovie.setDisable(false);
+                Main.primaryStage.setTitle(Main.APP_NAME + " " + Main.APP_VERSION + " [db: " + file.getName() + "]");
+                localDatabase = new LocalDatabase();
+                localDatabase.setDbFilePath(file.getPath());
+                localDatabase.setDbFileName(file.getName());
+                moviesToSee = localDatabase.loadMoviesDatabase();
+                fillTableInMainWindow(isAppWorksOnline);
+                lblToolbar.setText("Pomyślnie załadowano lokalną bazę danych");
+            }
         });
 
         /**
@@ -147,8 +158,7 @@ public class Controller implements Initializable{
             menuKindOfWork.setText("Status pracy: online");
             isAppWorksOnline = true;
             menuMovie.setDisable(false);
-
-            fillMoviesTable(isAppWorksOnline);
+            fillTableInMainWindow(isAppWorksOnline);
 
             lblToolbar.setText("Pomyślnie załadowano bazę danych online");
         });
@@ -201,6 +211,9 @@ public class Controller implements Initializable{
                     stage.setScene(new Scene(root));
                     stage.setResizable(false);
                     stage.show();
+                    stage.setOnCloseRequest(event1 -> {
+                        fillTableInMainWindow(isAppWorksOnline);
+                    });
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -212,8 +225,7 @@ public class Controller implements Initializable{
          */
         miModify.setOnAction(event ->
         {
-            LocalDatabase localDatabase = new LocalDatabase();
-            localDatabase.addToDb(moviesToSee);
+            //
         });
 
         /**
@@ -263,7 +275,7 @@ public class Controller implements Initializable{
             alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
 
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == buttonTypeYes){
+            if (result.get() == buttonTypeYes) {
                 DatabaseHandling.connectWithDatabase();
                 DatabaseHandling.updateRecordInDatabase(selectedItemInTable, true);
                 lblToolbar.setText("Film został oznaczony jako obejrzany");
@@ -291,15 +303,11 @@ public class Controller implements Initializable{
         lblGenre.setText(movieToSee.getImdbMovie().getGenre());
         lblDescription.setText(movieToSee.getImdbMovie().getDescription());
 
-        if(movieToSee.isMovieParameters())
-        {
+        if (movieToSee.isMovieParameters())
             setLogotypesOfParameters(movieToSee.getSource(), movieToSee.getVersion(), movieToSee.getContainer(), movieToSee.getResolution(), movieToSee.getAudioSub());
-        }
         // If there aren't movie parameters, method is called with -1 to disable logotypes
         else
-        {
             setLogotypesOfParameters(-1, -1, -1, -1, -1);
-        }
     }
 
     /**
@@ -531,49 +539,54 @@ public class Controller implements Initializable{
         alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
 
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == buttonTypeYes){
-            if(isAppWorksOnline)
-            {
+        if (result.get() == buttonTypeYes) {
+            if (isAppWorksOnline) {
                 status = DatabaseHandling.deleteRecordFromDatabase(selectedItemInTable);
-                fillMoviesTable(isAppWorksOnline);
-            }
-            else
-            {
+                fillTableInMainWindow(isAppWorksOnline);
+            } else {
                 //
             }
 
-            if(status)
-            {
+            if (status)
                 lblToolbar.setText("Film został pomyślnie usunięty z bazy danych");
-            }
             else
-            {
                 lblToolbar.setText("Wystąpił błąd podczas usuwania filmu z bazy danych");
-            }
         }
     }
 
-    private void fillMoviesTable(boolean isAppWorksOnline)
+    private void fillTableInMainWindow(boolean isAppWorksOnline)
     {
-        if(isAppWorksOnline)
-        {
+        if (isAppWorksOnline) {
             DatabaseHandling databaseHandling = new DatabaseHandling();
-            moviesToSee = databaseHandling.getElementFromDatabase();
-            moviesToSeeAsTableEntries = databaseHandling.getMoviesToSeeAsTableEntries();
-
-            // Fills the table
-            tbcMovieTitle.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
-            tbcImdbRating.setCellValueFactory(cellData -> cellData.getValue().imdbRatingProperty());
-            tbcImdbRating.setStyle("-fx-alignment: CENTER;");
-            tbcImdbRating.setSortType(TableColumn.SortType.DESCENDING); // Sort by IMDb rating
-            tbcPremiereDate.setCellValueFactory(cellData -> cellData.getValue().premiereDateProperty());
-            tbcPremiereDate.setStyle("-fx-alignment: CENTER-RIGHT;");
-            tbcLength.setCellValueFactory(cellData -> cellData.getValue().lengthProperty());
-            tbcLength.setStyle("-fx-alignment: CENTER;");
-            tbcGenre.setCellValueFactory(cellData -> cellData.getValue().genreProperty());
-            tbvMovieListFromDb.setItems(getMoviesToSeeAsTableEntries());
-            tbvMovieListFromDb.getSortOrder().add(tbcImdbRating); // Sort by IMDb rating
+            moviesToSee = databaseHandling.getMoviesFromExternalDatabase();
         }
+        moviesToSeeAsTableEntries = convertMapToObservableList();
+
+        tbcMovieTitle.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
+        tbcImdbRating.setCellValueFactory(cellData -> cellData.getValue().imdbRatingProperty());
+        tbcImdbRating.setStyle("-fx-alignment: CENTER;");
+        tbcImdbRating.setSortType(TableColumn.SortType.DESCENDING); // Sort by IMDb rating
+        tbcPremiereDate.setCellValueFactory(cellData -> cellData.getValue().premiereDateProperty());
+        tbcPremiereDate.setStyle("-fx-alignment: CENTER-RIGHT;");
+        tbcLength.setCellValueFactory(cellData -> cellData.getValue().lengthProperty());
+        tbcLength.setStyle("-fx-alignment: CENTER;");
+        tbcGenre.setCellValueFactory(cellData -> cellData.getValue().genreProperty());
+        tbvMovieListFromDb.setItems(getMoviesToSeeAsTableEntries());
+        tbvMovieListFromDb.getSortOrder().add(tbcImdbRating); // Sort by IMDb rating
+        tbvMovieListFromDb.getSelectionModel().selectFirst();
     }
 
+    private ObservableList<TableEntry> convertMapToObservableList() {
+
+        ObservableList<TableEntry> moviesToSeeAsTableEntries = FXCollections.observableArrayList();
+
+        for (String key :
+                moviesToSee.keySet()) {
+            MovieToSee movieToSee = moviesToSee.get(key);
+            moviesToSeeAsTableEntries.add(new TableEntry(movieToSee.getImdbMovie().getTitle(), movieToSee.getImdbMovie().getImdbRating(),
+                    movieToSee.getImdbMovie().getPremiereDate(), movieToSee.getImdbMovie().getLength(), movieToSee.getImdbMovie().getGenre(),
+                    movieToSee.getImdbMovie().getImdbID()));
+        }
+        return moviesToSeeAsTableEntries;
+    }
 }

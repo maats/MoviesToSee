@@ -23,8 +23,7 @@ import java.util.ResourceBundle;
 public class AddDialogController implements Initializable {
 
     @FXML private Button btnAddMovieToSee;
-    @FXML private Button btnSaveInDb;
-    @FXML private Button btnSaveLocal;
+    @FXML private Button btnSave;
     @FXML private Button btnSearch;
     @FXML private Button btnWrongMovieFound;
     @FXML private ChoiceBox<String> cebAudioSubtitles;
@@ -44,9 +43,10 @@ public class AddDialogController implements Initializable {
     @FXML private TextField txtMovieYear;
     @FXML private VBox vboxMovieParameters;
     @FXML private VBox vboxSaveButtons;
+
     private Image poster;
     ImdbMovie imdbMovie = null;
-    MovieToSee movieToSee = new MovieToSee();
+    private MovieToSee movieToSee = new MovieToSee();
     static Map<Integer, String> mapAudioSubtitles;
     static Map<Integer, String> mapContainers;
     static Map<Integer, String> mapResolutions;
@@ -102,9 +102,8 @@ public class AddDialogController implements Initializable {
             }
         });
 
-        btnSaveInDb.setOnAction(event -> {
+        btnSave.setOnAction(event -> {
 
-            DatabaseHandling.connectWithDatabase();
             // Check if user chose setting up movie parameters
             if(setMovieParameters)
             {
@@ -115,9 +114,11 @@ public class AddDialogController implements Initializable {
             {
                 movieToSee = new MovieToSee(imdbMovie, setMovieParameters);
             }
-            DatabaseHandling.insertElementIntoDatabase(movieToSee, setMovieParameters);
-            System.out.println(movieToSee.toString());
 
+            if(Controller.isAppWorksOnline())
+                saveMovieInExternalDatabase();
+            else
+                saveMovieInLocalDatabaseFile();
         });
 
         btnAddMovieToSee.setOnAction(event -> {
@@ -221,5 +222,19 @@ public class AddDialogController implements Initializable {
             cebVersion.getItems().add(mapVersions.get(key));
         }
         cebVersion.getSelectionModel().selectFirst();
+    }
+
+    public void saveMovieInLocalDatabaseFile()
+    {
+        LocalDatabase.addMovieToLocalDatabase(movieToSee, setMovieParameters);
+        LocalDatabase.saveMoviesDatabase(LocalDatabase.getMoviesToSee());
+        System.out.println(movieToSee.toString());
+    }
+
+    public void saveMovieInExternalDatabase()
+    {
+        DatabaseHandling.connectWithDatabase();
+        DatabaseHandling.insertElementIntoDatabase(movieToSee, setMovieParameters);
+        System.out.println(movieToSee.toString());
     }
 }

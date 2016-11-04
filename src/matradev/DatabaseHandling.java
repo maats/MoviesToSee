@@ -105,7 +105,7 @@ public class DatabaseHandling {
         return true;
     }
 
-    Map<String, MovieToSee> getElementFromDatabase()
+    Map<String, MovieToSee> getMoviesFromExternalDatabase()
     {
         Statement statement;
         MovieToSee movieToSee;
@@ -147,10 +147,6 @@ public class DatabaseHandling {
                 }
 
                 moviesToSee.put(movieToSee.getImdbMovie().getImdbID(), movieToSee);
-
-                moviesToSeeAsTableEntries.add(new TableEntry(movieToSee.getImdbMovie().getTitle(), movieToSee.getImdbMovie().getImdbRating(),
-                        movieToSee.getImdbMovie().getPremiereDate(), movieToSee.getImdbMovie().getLength(), movieToSee.getImdbMovie().getGenre(),
-                        movieToSee.getImdbMovie().getImdbID()));
             }
             rs.close();
             statement.close();

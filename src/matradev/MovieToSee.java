@@ -48,8 +48,7 @@ public class MovieToSee implements Serializable {
         put(1, "3D");
     }};
 
-    public MovieToSee() {
-    }
+    public MovieToSee() { }
 
     public MovieToSee(ImdbMovie imdbMovie, int source, int version, int container, int resolution, int audioSub, boolean movieParameters) {
         this.imdbMovie = imdbMovie;

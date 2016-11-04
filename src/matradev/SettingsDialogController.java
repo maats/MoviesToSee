@@ -30,6 +30,7 @@ public class SettingsDialogController implements Initializable {
     @FXML private TextField txtServerDbName;
     @FXML private TextField txtServerLogin;
     @FXML private TextField txtServerPort;
+
     final FileChooser fileChooser = new FileChooser();
 
     @Override
@@ -48,7 +49,7 @@ public class SettingsDialogController implements Initializable {
             databaseHandling.testConnectionWithDatabase(serverAddress, serverPort, serverDbName, serverLogin, serverPassword);
 
             Map<String, MovieToSee> moviesToSee = new TreeMap<String, MovieToSee>();
-            moviesToSee = databaseHandling.getElementFromDatabase();
+            moviesToSee = databaseHandling.getMoviesFromExternalDatabase();
 
             for (String key :
                     moviesToSee.keySet()) {
@@ -66,8 +67,8 @@ public class SettingsDialogController implements Initializable {
 
             if(file != null)
             {
-                Controller.setLocalDatabasePath(file.getAbsolutePath());
-                txtChosenFile.setText(file.getAbsolutePath());
+/*                Controller.setLocalDatabasePath(file.getAbsolutePath());
+                txtChosenFile.setText(file.getAbsolutePath());*/
             }
         });
     }

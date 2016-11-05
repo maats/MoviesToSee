@@ -5,9 +5,11 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
+ * MovieToSee object implementation
  * Created by Mateusz on 05.10.2016.
  */
-public class MovieToSee implements Serializable {
+
+class MovieToSee implements Serializable {
 
     private ImdbMovie imdbMovie;
     private int source;
@@ -48,9 +50,9 @@ public class MovieToSee implements Serializable {
         put(1, "3D");
     }};
 
-    public MovieToSee() { }
+    MovieToSee() { }
 
-    public MovieToSee(ImdbMovie imdbMovie, int source, int version, int container, int resolution, int audioSub, boolean seen, boolean movieParameters) {
+    MovieToSee(ImdbMovie imdbMovie, int source, int version, int container, int resolution, int audioSub, boolean seen, boolean movieParameters) {
         this.imdbMovie = imdbMovie;
         this.source = source;
         this.version = version;
@@ -61,45 +63,45 @@ public class MovieToSee implements Serializable {
         this.movieParameters = movieParameters;
     }
 
-    public MovieToSee(ImdbMovie imdbMovie, boolean seen, boolean movieParameters) {
+    MovieToSee(ImdbMovie imdbMovie, boolean seen, boolean movieParameters) {
         this.imdbMovie = imdbMovie;
         this.seen = seen;
         this.movieParameters = movieParameters;
     }
 
-    public ImdbMovie getImdbMovie() {
+    ImdbMovie getImdbMovie() {
         return imdbMovie;
     }
 
-    public int getSource() {
+    int getSource() {
         return source;
     }
 
-    public int getVersion() {
+    int getVersion() {
         return version;
     }
 
-    public int getContainer() {
+    int getContainer() {
         return container;
     }
 
-    public int getResolution() {
+    int getResolution() {
         return resolution;
     }
 
-    public int getAudioSub() {
+    int getAudioSub() {
         return audioSub;
     }
 
-    public boolean isSeen() {
+    boolean isSeen() {
         return seen;
     }
 
-    public void setSeen(boolean seen) {
+    void setSeen(boolean seen) {
         this.seen = seen;
     }
 
-    public boolean isMovieParameters() {
+    boolean isMovieParameters() {
         return movieParameters;
     }
 
@@ -117,23 +119,23 @@ public class MovieToSee implements Serializable {
                 '}';
     }
 
-    public static Map<Integer, String> getContainers() {
+    static Map<Integer, String> getContainers() {
         return containers;
     }
 
-    public static Map<Integer, String> getSources() {
+    static Map<Integer, String> getSources() {
         return sources;
     }
 
-    public static Map<Integer, String> getResolutions() {
+    static Map<Integer, String> getResolutions() {
         return resolutions;
     }
 
-    public static Map<Integer, String> getAudioSubs() {
+    static Map<Integer, String> getAudioSubs() {
         return audioSubs;
     }
 
-    public static Map<Integer, String> getVersions() {
+    static Map<Integer, String> getVersions() {
         return versions;
     }
 

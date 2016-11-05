@@ -50,18 +50,20 @@ public class MovieToSee implements Serializable {
 
     public MovieToSee() { }
 
-    public MovieToSee(ImdbMovie imdbMovie, int source, int version, int container, int resolution, int audioSub, boolean movieParameters) {
+    public MovieToSee(ImdbMovie imdbMovie, int source, int version, int container, int resolution, int audioSub, boolean seen, boolean movieParameters) {
         this.imdbMovie = imdbMovie;
         this.source = source;
         this.version = version;
         this.container = container;
         this.resolution = resolution;
         this.audioSub = audioSub;
+        this.seen = seen;
         this.movieParameters = movieParameters;
     }
 
-    public MovieToSee(ImdbMovie imdbMovie, boolean movieParameters) {
+    public MovieToSee(ImdbMovie imdbMovie, boolean seen, boolean movieParameters) {
         this.imdbMovie = imdbMovie;
+        this.seen = seen;
         this.movieParameters = movieParameters;
     }
 

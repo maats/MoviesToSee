@@ -8,13 +8,6 @@ import javafx.beans.property.*;
  */
 public class TableEntry {
 
-/*    public SimpleStringProperty movieTitle = new SimpleStringProperty();
-    public SimpleFloatProperty imdbRating = new SimpleFloatProperty();
-    public SimpleStringProperty premiereDate = new SimpleStringProperty();
-    public SimpleIntegerProperty length = new SimpleIntegerProperty();
-    public SimpleStringProperty genre = new SimpleStringProperty();
-    public String imdbID;*/
-
     private final StringProperty title;
     private final FloatProperty imdbRating;
     private final StringProperty premiereDate;

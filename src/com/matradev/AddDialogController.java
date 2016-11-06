@@ -1,4 +1,4 @@
-package matradev;
+package com.matradev;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -73,21 +73,18 @@ public class AddDialogController implements Initializable {
             ImdbJsonReader imdbJsonReader = new ImdbJsonReader();
 
             // TODO: Check if IMDb ID is entered in valid format (tt1234567)
-            if(movieId.length() != 0)
-            {
+            if (movieId.length() != 0) {
                 imdbJsonReader.parseImdbId(movieId);
                 imdbJsonReader.processParsedData();
                 imdbMovie = imdbJsonReader.getMovie();
             }
-            else if(movieTitle.length() != 0)
-            {
+            else if (movieTitle.length() != 0) {
                 imdbJsonReader.parseImdbByMovieTitleAndYear(movieTitle, movieYear);
                 imdbJsonReader.processParsedData();
                 imdbMovie = imdbJsonReader.getMovie();
             }
 
-            if(imdbMovie != null)
-            {
+            if (imdbMovie != null) {
                 lblTitle.setText(imdbMovie.getTitle());
                 lblPremiereDate.setText(imdbMovie.getPremiereDate());
                 lblGenre.setText(imdbMovie.getGenre());
@@ -97,25 +94,20 @@ public class AddDialogController implements Initializable {
                 lblCheckSearchResult.setDisable(false);
             }
             else
-            {
                 System.out.println("Nie podano argumentu");
-            }
         });
 
         btnSave.setOnAction(event -> {
 
             // Check if user chose setting up movie parameters
-            if(setMovieParameters)
-            {
+            if (setMovieParameters) {
                 int[] movieParams = getMovieParametersFromChoiceBoxes();
-                movieToSee = new MovieToSee(imdbMovie, movieParams[0], movieParams[1], movieParams[2], movieParams[3], movieParams[4], setMovieParameters);
+                movieToSee = new MovieToSee(imdbMovie, movieParams[0], movieParams[1], movieParams[2], movieParams[3], movieParams[4], false, setMovieParameters);
             }
             else
-            {
-                movieToSee = new MovieToSee(imdbMovie, setMovieParameters);
-            }
+                movieToSee = new MovieToSee(imdbMovie, false, setMovieParameters);
 
-            if(Controller.isAppWorksOnline())
+            if (Controller.isAppWorksOnline())
                 saveMovieInExternalDatabase();
             else
                 saveMovieInLocalDatabaseFile();

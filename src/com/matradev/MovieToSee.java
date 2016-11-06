@@ -1,4 +1,4 @@
-package matradev;
+package com.matradev;
 
 import java.io.Serializable;
 import java.util.Map;

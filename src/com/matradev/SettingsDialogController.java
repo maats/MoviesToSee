@@ -1,4 +1,4 @@
-package matradev;
+package com.matradev;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

@@ -1,13 +1,10 @@
-package matradev;
+package com.matradev;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Map;
 
 /**
  * Class used for parsing data from IMDb API (omdbapi.com)

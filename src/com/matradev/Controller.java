@@ -1,5 +1,6 @@
-package matradev;
+package com.matradev;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -17,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -74,9 +76,8 @@ public class Controller implements Initializable{
     private Image poster;
     private ObservableList<TableEntry> moviesToSeeAsTableEntries = FXCollections.observableArrayList();
     private Map<String, MovieToSee> moviesToSee = new TreeMap<String, MovieToSee>();
-    private static String selectedItemInTable;
+    private static TableEntry selectedItemInTable;
     private final FileChooser fileChooser = new FileChooser();
-    private LocalDatabase localDatabase;
     private static boolean isAppWorksOnline;
 
     public ObservableList<TableEntry> getMoviesToSeeAsTableEntries() {
@@ -114,10 +115,8 @@ public class Controller implements Initializable{
                 isAppWorksOnline = false;
                 menuMovie.setDisable(false);
                 Main.primaryStage.setTitle(Main.APP_NAME + " " + Main.APP_VERSION + " [ db: " + file.getName() + " ]");
-                localDatabase = new LocalDatabase();
-                localDatabase.setDbFilePath(file.getPath());
-                localDatabase.setDbFileName(file.getName());
-                localDatabase.createDatabaseFile();
+                LocalDatabase.setDbFilePath(file.getPath());
+                LocalDatabase.createDatabaseFile();
             }
         });
 
@@ -138,11 +137,10 @@ public class Controller implements Initializable{
                 isAppWorksOnline = false;
                 menuMovie.setDisable(false);
                 Main.primaryStage.setTitle(Main.APP_NAME + " " + Main.APP_VERSION + " [db: " + file.getName() + "]");
-                localDatabase = new LocalDatabase();
-                localDatabase.setDbFilePath(file.getPath());
-                localDatabase.setDbFileName(file.getName());
-                moviesToSee = localDatabase.loadMoviesDatabase();
+                LocalDatabase.setDbFilePath(file.getPath());
+                moviesToSee = LocalDatabase.loadMoviesDatabase();
                 fillTableInMainWindow(isAppWorksOnline);
+                tbvMovieListFromDb.getSelectionModel().selectFirst();
                 lblToolbar.setText("Pomyślnie załadowano lokalną bazę danych");
             }
         });
@@ -159,6 +157,7 @@ public class Controller implements Initializable{
             isAppWorksOnline = true;
             menuMovie.setDisable(false);
             fillTableInMainWindow(isAppWorksOnline);
+            tbvMovieListFromDb.getSelectionModel().selectFirst();
 
             lblToolbar.setText("Pomyślnie załadowano bazę danych online");
         });
@@ -172,7 +171,7 @@ public class Controller implements Initializable{
             public void handle(ActionEvent event) {
                 Parent root;
                 try {
-                    root = FXMLLoader.load(getClass().getClassLoader().getResource("matradev/SettingsDialog.fxml"), resources);
+                    root = FXMLLoader.load(getClass().getClassLoader().getResource("SettingsDialog.fxml"), resources);
                     Stage stage = new Stage();
                     stage.initModality(Modality.WINDOW_MODAL); // Parent stage is unavailable when child is opened
                     stage.initOwner(Main.primaryStage); // Parent stage is unavailable when child is opened
@@ -203,7 +202,7 @@ public class Controller implements Initializable{
             public void handle(ActionEvent event) {
                 Parent root;
                 try {
-                    root = FXMLLoader.load(getClass().getClassLoader().getResource("matradev/AddDialog.fxml"), resources);
+                    root = FXMLLoader.load(getClass().getClassLoader().getResource("AddDialog.fxml"), resources);
                     Stage stage = new Stage();
                     stage.initModality(Modality.WINDOW_MODAL); // Parent stage is unavailable when child is opened
                     stage.initOwner(Main.primaryStage); // Parent stage is unavailable when child is opened
@@ -232,7 +231,21 @@ public class Controller implements Initializable{
          * MenuItem: Movie > Delete
          */
         miDelete.setOnAction(event -> {
-            deleteMovieFromDatabase(isAppWorksOnline);
+
+            // Show alert window with confirmation of action
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Potwierdzenie akcji");
+            alert.setHeaderText("Czy na pewno chcesz usunąć film z bazy danych?");
+
+            ButtonType buttonTypeYes = new ButtonType("Tak", ButtonBar.ButtonData.OK_DONE);
+            ButtonType buttonTypeNo = new ButtonType("Nie", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+            alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == buttonTypeYes) {
+                deleteMovieFromDatabase(isAppWorksOnline);
+            }
         });
 
         /**
@@ -252,10 +265,41 @@ public class Controller implements Initializable{
                 {
                     lblToolbar.setText(null);
                     btnSeen.setDisable(false);
-                    selectedItemInTable = newValue.getImdbID();
+                    selectedItemInTable = newValue;
                     setMovieInformationsInMainWindow(newValue.getImdbID());
                     System.out.println(newValue.toString());
                 }
+            }
+        });
+
+        tbvMovieListFromDb.setRowFactory(new Callback<TableView<TableEntry>, TableRow<TableEntry>>() {
+            @Override
+            public TableRow<TableEntry> call(TableView<TableEntry> param) {
+                final TableRow<TableEntry> row = new TableRow<TableEntry>();
+                final ContextMenu contextMenu = new ContextMenu();
+                final MenuItem miSetAsSeen = new MenuItem("Oznacz jako obejrzany");
+                final MenuItem miModifyItem = new MenuItem("Modyfikuj");
+                final MenuItem miDeleteItem = new MenuItem("Usuń");
+
+                miSetAsSeen.setOnAction(event -> {
+                    btnSeen.fire();
+                });
+
+                miModifyItem.setOnAction(event -> {
+                    miModify.fire();
+                });
+
+                miDeleteItem.setOnAction(event -> {
+                    miDelete.fire();
+                });
+
+                contextMenu.getItems().add(miSetAsSeen);
+                contextMenu.getItems().add(miModifyItem);
+                contextMenu.getItems().add(miDeleteItem);
+
+                row.contextMenuProperty().bind(Bindings.when(row.emptyProperty()).then((ContextMenu)null).otherwise(contextMenu));
+
+                return row;
             }
         });
 
@@ -276,10 +320,7 @@ public class Controller implements Initializable{
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == buttonTypeYes) {
-                DatabaseHandling.connectWithDatabase();
-                DatabaseHandling.updateRecordInDatabase(selectedItemInTable, true);
-                lblToolbar.setText("Film został oznaczony jako obejrzany");
-                btnSeen.setDisable(true);
+                setMovieAsSeen(isAppWorksOnline);
             }
         });
     }
@@ -302,6 +343,14 @@ public class Controller implements Initializable{
         lblLength.setText(String.valueOf(movieToSee.getImdbMovie().getLength() + " min"));
         lblGenre.setText(movieToSee.getImdbMovie().getGenre());
         lblDescription.setText(movieToSee.getImdbMovie().getDescription());
+
+        if (movieToSee.isSeen()) {
+            btnSeen.setText("✓ Obejrzany");
+            btnSeen.setDisable(true);
+        } else {
+            btnSeen.setText("Oznacz jako obejrzany");
+            btnSeen.setDisable(false);
+        }
 
         if (movieToSee.isMovieParameters())
             setLogotypesOfParameters(movieToSee.getSource(), movieToSee.getVersion(), movieToSee.getContainer(), movieToSee.getResolution(), movieToSee.getAudioSub());
@@ -518,40 +567,47 @@ public class Controller implements Initializable{
         }
     }
 
-
-    private void setMovieAsSeen()
+    private void setMovieAsSeen(boolean isAppWorksOnline)
     {
-
+        if (isAppWorksOnline) {
+            DatabaseHandling.updateRecordInDatabase(selectedItemInTable.getImdbID(), true);
+        } else {
+            MovieToSee movieToSee = moviesToSee.get(selectedItemInTable.getImdbID());
+            movieToSee.setSeen(true);
+            moviesToSee.put(selectedItemInTable.getImdbID(), movieToSee);
+        }
+        btnSeen.setText("✓ Obejrzany");
+        btnSeen.setDisable(true);
+        fillTableInMainWindow(isAppWorksOnline);
+        lblToolbar.setText("Film został oznaczony jako obejrzany");
     }
 
+    /**
+     *
+     * @param isAppWorksOnline
+     * TODO: If deleting last movie from list, cleanup information section (NullPointerException)
+     */
     private void deleteMovieFromDatabase(boolean isAppWorksOnline)
     {
         boolean status = true;
 
-        // Show alert window with confirmation of action
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Potwierdzenie akcji");
-        alert.setHeaderText("Czy na pewno chcesz usunąć film z bazy danych?");
-
-        ButtonType buttonTypeYes = new ButtonType("Tak", ButtonBar.ButtonData.OK_DONE);
-        ButtonType buttonTypeNo = new ButtonType("Nie", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == buttonTypeYes) {
-            if (isAppWorksOnline) {
-                status = DatabaseHandling.deleteRecordFromDatabase(selectedItemInTable);
-                fillTableInMainWindow(isAppWorksOnline);
-            } else {
-                //
-            }
-
-            if (status)
-                lblToolbar.setText("Film został pomyślnie usunięty z bazy danych");
-            else
-                lblToolbar.setText("Wystąpił błąd podczas usuwania filmu z bazy danych");
+        if (isAppWorksOnline) {
+            status = DatabaseHandling.deleteRecordFromDatabase(selectedItemInTable.getImdbID());
+        } else {
+            moviesToSee.remove(selectedItemInTable.getImdbID());
+            LocalDatabase.saveMoviesDatabase(LocalDatabase.getMoviesToSee());
         }
+        fillTableInMainWindow(isAppWorksOnline);
+
+        if (status)
+            lblToolbar.setText("Film został pomyślnie usunięty z bazy danych");
+        else
+            lblToolbar.setText("Wystąpił błąd podczas usuwania filmu z bazy danych");
+    }
+
+    private void deleteSeenMoviesFromDatabase(boolean isAppWorksOnline)
+    {
+
     }
 
     private void fillTableInMainWindow(boolean isAppWorksOnline)
@@ -573,7 +629,6 @@ public class Controller implements Initializable{
         tbcGenre.setCellValueFactory(cellData -> cellData.getValue().genreProperty());
         tbvMovieListFromDb.setItems(getMoviesToSeeAsTableEntries());
         tbvMovieListFromDb.getSortOrder().add(tbcImdbRating); // Sort by IMDb rating
-        tbvMovieListFromDb.getSelectionModel().selectFirst();
     }
 
     private ObservableList<TableEntry> convertMapToObservableList() {

@@ -1,7 +1,6 @@
-package matradev;
+package com.matradev;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -11,25 +10,18 @@ import java.util.TreeMap;
  */
 public class LocalDatabase {
 
-    private static MovieToSee movieToSee;
-    private static ArrayList<MovieToSee> movies = new ArrayList<>();
     private static String dbFilePath;
-    private static String dbFileName;
     private static Map<String, MovieToSee> moviesToSee = new TreeMap<>();
 
-    public void setDbFilePath(String dbFilePath) {
+    public static void setDbFilePath(String dbFilePath) {
         LocalDatabase.dbFilePath = dbFilePath;
-    }
-
-    public void setDbFileName(String dbFileName) {
-        LocalDatabase.dbFileName = dbFileName;
     }
 
     public static Map<String, MovieToSee> getMoviesToSee() {
         return moviesToSee;
     }
 
-    void createDatabaseFile()
+    static void createDatabaseFile()
     {
         FileOutputStream fos;
         ObjectOutputStream oos;
@@ -67,14 +59,13 @@ public class LocalDatabase {
         moviesToSee.put(movieToSee.getImdbMovie().getImdbID(), movieToSee);
     }
 
-    Map<String, MovieToSee> loadMoviesDatabase()
+    static Map<String, MovieToSee> loadMoviesDatabase()
     {
         FileInputStream fis;
         ObjectInputStream ois;
         File file = new File(dbFilePath);
 
-        if(file.exists())
-        {
+        if (file.exists()) {
             try {
                 fis = new FileInputStream(dbFilePath);
                 ois = new ObjectInputStream(fis);

@@ -1,4 +1,4 @@
-package matradev;
+package com.matradev;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -139,12 +139,10 @@ public class DatabaseHandling {
                     int resolution = rs.getInt("resolution");
                     int audioSubs = rs.getInt("audio_subs");
 
-                    movieToSee = new MovieToSee(imdbMovie, source, version, container, resolution, audioSubs, movieParameters);
+                    movieToSee = new MovieToSee(imdbMovie, source, version, container, resolution, audioSubs, seen, movieParameters);
                 }
                 else
-                {
-                    movieToSee = new MovieToSee(imdbMovie, movieParameters);
-                }
+                    movieToSee = new MovieToSee(imdbMovie, seen, movieParameters);
 
                 moviesToSee.put(movieToSee.getImdbMovie().getImdbID(), movieToSee);
             }
@@ -197,7 +195,6 @@ public class DatabaseHandling {
             statement.close();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
             return false;
         }
     }
